@@ -1,0 +1,26 @@
+apply plugin: 'sonar'
+
+sonar {
+    project {
+        key = sonarProjectKey
+        name = sonarProjectName
+        version = sonarProjectVersion
+        withProjectProperties { props ->
+            props["sonar.core.codeCoveragePlugin"] = "jacoco"
+            props["sonar.scm.user.secured"] = sonarScmUserSecured
+            props["sonar.scm.password.secured"] = sonarScmPasswordSecured
+        }
+    }
+
+    server {
+        url = sonarServerUrl
+    }
+
+    database {
+        url = sonarJdbcUrl
+        driverClassName = sonarJdbcDriver
+        username = sonarJdbcUser
+        password = sonarJdbcPassword
+    }
+}
+

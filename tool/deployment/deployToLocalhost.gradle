@@ -1,0 +1,47 @@
+def propertiesFile = "deploy.properties.localhost"
+loadProperties propertiesFile
+
+
+
+ext.serverDir = ext["tcServer.dir"]
+ext.artifactDir = ext["artifact.dir"]
+ext.appName = "qa-gateway"
+ext.warName = "${appName}.war"
+ext.serverWorkingDir = "${serverDir}/${appName}/bin"
+ext.serverCacheDir = "${serverDir}/${appName}/webapps/${appName}"
+
+
+task stopTcServer(type: Exec){
+    workingDir serverWorkingDir
+    commandLine 'cmd', '/c', 'tcruntime-ctl.bat', 'stop'
+}
+
+task clearTcServerCache(dependsOn: 'stopTcServer', type: Delete) {
+    delete serverCacheDir
+}
+
+task copyArtifact(type: Copy) {
+    from "../../build/libs/${warName}"
+    into "${artifactDir}"
+    rename "${warName}", "${appName}.war"
+
+}
+
+task deployLocal(dependsOn: ['clearTcServerCache', 'copyArtifact'], type: Exec) {
+    workingDir serverWorkingDir
+    commandLine 'cmd', '/c', 'tcruntime-ctl.bat', 'start'
+}
+
+def loadProperties(String sourceFileName) {
+    def config = new Properties()
+    def propFile = new File(sourceFileName)
+
+    if (propFile.canRead()) {
+        config.load(new FileInputStream(propFile))
+        for (Map.Entry property in config) {
+            ext[property.key] = property.value;
+        }
+    } else {
+        throw new FileNotFoundException("Can't find file \"${sourceFileName}\".")
+    }
+}

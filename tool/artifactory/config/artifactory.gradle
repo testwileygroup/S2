@@ -1,0 +1,36 @@
+apply plugin: 'artifactory'
+
+def globalVersion = new Version(currentVersion)
+def shouldAddVersion = System.properties.addVersion?.toBoolean() ?: false
+
+group = 'com.wiley.cms.jqa'
+version = shouldAddVersion ? globalVersion : ''
+status = globalVersion.status
+
+
+class Version {
+    String originalVersion
+    String thisVersion
+    String status
+
+    Version(String versionValue) {
+        originalVersion = versionValue
+
+        if (originalVersion.endsWith('-SNAPSHOT')) {
+          status = 'staging'
+          thisVersion = (getSvnRevision() == null) ?  versionValue
+              : originalVersion.substring(0, originalVersion.length() - 'SNAPSHOT'.length()) + 'rev.'  + getSvnRevision()
+        } else {
+          status = 'release'
+          thisVersion = versionValue
+        }
+    }
+
+    String getSvnRevision() {
+        System.env.SVN_REVISION
+    }
+
+    String toString() {
+        thisVersion
+    }
+}

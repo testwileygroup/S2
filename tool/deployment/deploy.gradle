@@ -1,0 +1,68 @@
+configurations {
+    sshAntTask
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    sshAntTask 'org.apache.ant:ant-jsch:1.8.4', 'com.jcraft:jsch:0.1.49'
+}
+
+/* User should add environment name as system property and specific artifact path optionally. */
+ext.applicationArtifact = System.getProperty("artifact") ?: "../../build/libs/qa-gateway.war"
+def propertiesFile = "deploy.properties." + System.getProperty("env")
+loadProperties propertiesFile
+ant.taskdef(name: 'sshexec', classname: 'org.apache.tools.ant.taskdefs.optional.ssh.SSHExec',
+        classpath: configurations.sshAntTask.asPath)
+ant.taskdef(name: 'scp', classname: 'org.apache.tools.ant.taskdefs.optional.ssh.Scp',
+        classpath: configurations.sshAntTask.asPath)
+
+
+
+
+task deliver << {
+    description = 'Copies the artifact to the target directory via ssh.'	
+    deliver()	
+}
+
+task deploy << {
+    description = 'Deploys the artifact.'
+
+    deliver()
+    resetTcServer()
+}
+
+def deliver() {
+    ant.scp(file: ext.applicationArtifact,
+            todir: "${ext['deployment.user']}:${ext['deployment.password']}" +
+                    "@${ext['deployment.host']}:${ext['deployment.dir']}",
+            trust: true
+    )
+}
+
+def resetTcServer() {
+    ant.sshexec(host: ext["deployment.host"],
+            command: ext["appsrv.reset.command"],
+            username: ext["deployment.user"],
+            password: ext["deployment.password"],
+            trust: true,
+            failonerror: false
+    )
+}
+
+def loadProperties(String sourceFileName) {
+    def config = new Properties()
+    def propFile = new File(sourceFileName)
+
+    if (propFile.canRead()) {
+        config.load(new FileInputStream(propFile))
+        for (Map.Entry property in config) {
+            ext[property.key] = property.value;
+        }
+    } else {
+        throw new FileNotFoundException("Can't find file \"${sourceFileName}\". Don't forget to add" +
+                "the environment name as a system property, e.g. 'gradle -b deploy.gradle -Denv=TES '")
+    }
+}

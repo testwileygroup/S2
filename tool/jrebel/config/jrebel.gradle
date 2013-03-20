@@ -1,0 +1,27 @@
+
+task generateRebel << {
+    file(sourceSets.main.output.classesDir.absolutePath).mkdirs()
+    def rebelFile = sourceSets.main.output.classesDir.absolutePath + '/rebel.xml'
+    def writer = new FileWriter(rebelFile)
+    new groovy.xml.MarkupBuilder(writer).application() {
+        def hasResources = file(sourceSets.main.output.resourcesDir.absolutePath).exists()
+        classpath{
+            dir( name:sourceSets.main.output.classesDir.absolutePath )
+            if (hasResources) {
+                dir( name:sourceSets.main.output.resourcesDir.absolutePath )
+            }
+        }
+
+        if (!project.getTasksByName('war', false).empty) {
+            def srcWebApp = project.webAppDir.absolutePath
+            web{
+                link(target:'/'){
+                    dir(name:srcWebApp)
+                }
+            }
+        }
+    }
+}
+
+jar.dependsOn generateRebel
+

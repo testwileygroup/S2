@@ -1,0 +1,49 @@
+def coberturaSerFile = "${buildDir}/cobertura/cobertura.ser"
+def classesDir = "${buildDir}/classes/main"
+def classesCopyDir = "${classesDir}-copy"
+def testDir = "${buildDir}/classes/test"
+def coberturaReportsDir = "${buildDir}/reports/cobertura"
+ext.coberturaReportFile = file("${coberturaReportsDir}/coverage.xml")
+def shouldRunCoverage = System.properties.runCoverage?.toBoolean() ?: false
+
+/* create copy of original .class files and do cobertura insturmentation */
+test.doFirst {
+    if (shouldRunCoverage) {
+        println ">>> coverage '${project.getName()}'"
+        ant {
+            if (new File(classesDir).exists()) {
+                taskdef(resource: 'tasks.properties', classpath: configurations.testRuntime.asPath)
+                copy(todir: classesCopyDir) {
+                    fileset(dir: classesDir)
+                }
+                'cobertura-instrument'(datafile: coberturaSerFile) {
+                    fileset(dir: classesDir,
+                            includes: "com/wiley/**/*.class",
+                            excludes: "**/*Test.class")
+                }
+            }
+        }
+
+        systemProperties["net.sourceforge.cobertura.datafile"] = coberturaSerFile
+    }
+}
+
+test {
+    useTestNG()
+    jvmArgs = ["-XX:-UseSplitVerifier"]
+}
+
+/* replace instrumented .class files with previously saved copy */
+test.doLast {
+    if (shouldRunCoverage) {
+        if (new File(classesCopyDir).exists()) {
+            ant {
+                delete(file: classesDir)
+                move(file: classesCopyDir, tofile: classesDir)
+            }
+            ant.'cobertura-report'(destdir: coberturaReportsDir,format: 'html', srcdir: "src/main/java", datafile: coberturaSerFile)
+            ant.'cobertura-report'(destdir: coberturaReportsDir, format: 'xml', srcdir: "src/main/java", datafile: coberturaSerFile)
+        }
+        println '<<< coverage'
+    }
+}
