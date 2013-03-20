@@ -1,4 +1,0 @@
-#Path to tc server directory
-tcServer.dir=
-#Path to directory with deployable war
-artifact.dir=

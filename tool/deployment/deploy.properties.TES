@@ -1,9 +1,0 @@
-deployment.user=jqaapp
-deployment.password=docdev1
-deployment.host=192.168.108.138
-deployment.dir=/home/jqaapp/deployable/packed
-
-jboss.start.command=bash /opt/software/bin/startJQA.sh
-jboss.process.pattern=\\bjava\\b.*\\borg.jboss.Main\\b.*\\s+-c\\s+JQA\\b
-
-appsrv.reset.command=bash /home/jqaapp/resetQaGateway.sh
