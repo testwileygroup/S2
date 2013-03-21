@@ -1,0 +1,17 @@
+.project
+.settings
+target
+.idea
+.classpath
+.checkstyle
+*.log
+*.log.*
+*.iml
+*.versionsBackup
+interpolated-*.xml
+*.iws
+*.ipr
+out
+*.ignore
+.gradle
+build
