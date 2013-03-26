@@ -1,0 +1,4 @@
+CRUD
+I as a user of S2
+Wand to be able to perform basic CRUD operations on content
+In order to persist and propertly organize the cotnent
