@@ -1,4 +1,0 @@
-Create
-I as a user of S2
-Wand to be able to create (add) new contet 
-In order to store the content in persisten place
