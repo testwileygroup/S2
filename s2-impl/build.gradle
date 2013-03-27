@@ -1,0 +1,8 @@
+dependencies {
+    compile project(':s2-api')
+	compile libraries.'commons-io'
+}
+
+/* workaround for hybrid module (Java, Groovy). More details here http://issues.gradle.org/browse/GRADLE-1190 */
+sourceSets.main.java.srcDirs = []
+sourceSets.main.groovy.srcDir 'src/main/java'

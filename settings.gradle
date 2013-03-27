@@ -1,1 +1,1 @@
-include 's2-api'
+include 's2-api', 's2-impl'

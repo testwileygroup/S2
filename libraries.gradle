@@ -3,7 +3,8 @@ def    slf4jVersion =					'1.7.2'
 def    logbackVersion =                 '1.0.9'
     
 ext.libraries = [    
-        'commons-lang3':                "org.apache.commons:commons-lang3:3.1",     
+        'commons-lang3':                "org.apache.commons:commons-lang3:3.1",
+		'commons-io':                   "commons-io:commons-io:2.4",		
         'guava':                        "com.google.guava:guava:13.0.1",
         'joda':                         "joda-time:joda-time:2.1",
 
@@ -17,6 +18,8 @@ ext.libraries = [
         'mockito-groovy-support':       "mockito-groovy-support-1.2:mockito-groovy-support-1.2",
         'insight-annotation':           "com.springsource.insight:insight-annotation:1.9.0.RELEASE",
 		'thucydides-core':				"net.thucydides:thucydides-core:0.9.104",
-		'thucydides-jbehave':			"net.thucydides:thucydides-jbehave-plugin:0.9.104"
+		'thucydides-jbehave':			"net.thucydides:thucydides-jbehave-plugin:0.9.104",
+		
+		'spring-context':               "org.springframework:spring-context:${springVersion}"
 		
 ]
