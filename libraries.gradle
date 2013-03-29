@@ -1,25 +1,30 @@
-def    springVersion =                  '3.2.2.RELEASE'       
+def    springVersion =                  '3.2.2.RELEASE'
 def    slf4jVersion =					'1.7.2'
 def    logbackVersion =                 '1.0.9'
-    
-ext.libraries = [    
+
+ext.libraries = [
         'commons-lang3':                "org.apache.commons:commons-lang3:3.1",
-		'commons-io':                   "commons-io:commons-io:2.4",		
+        'commons-io':                   "commons-io:commons-io:2.4",
         'guava':                        "com.google.guava:guava:13.0.1",
         'joda':                         "joda-time:joda-time:2.1",
 
         'slf4j-api':                    "org.slf4j:slf4j-api:${slf4jVersion}",
         'logback':                      "ch.qos.logback:logback-classic:${logbackVersion}",
-      
-        'groovy-all-indy':              "org.codehaus.groovy:groovy-all:2.0.6",       
+
+        'groovy-all-indy':              "org.codehaus.groovy:groovy-all:2.0.6",
         'fest-assert':                  "org.easytesting:fest-assert:1.4",
         'testng':                       "org.testng:testng:6.8",
         'mockito-all':                  "org.mockito:mockito-all:1.9.5",
         'mockito-groovy-support':       "mockito-groovy-support-1.2:mockito-groovy-support-1.2",
         'insight-annotation':           "com.springsource.insight:insight-annotation:1.9.0.RELEASE",
-		'thucydides-core':				"net.thucydides:thucydides-core:0.9.104",
-		'thucydides-jbehave':			"net.thucydides:thucydides-jbehave-plugin:0.9.104",
-		
-		'spring-context':               "org.springframework:spring-context:${springVersion}"
-		
+        'thucydides-core':				"net.thucydides:thucydides-core:0.9.104",
+        'thucydides-jbehave':			"net.thucydides:thucydides-jbehave-plugin:0.9.104",
+
+        'aspectjrt':                    "org.aspectj:aspectjrt:1.7.2",
+        'hsqldb':   					"org.hsqldb:hsqldb:2.2.9",
+
+        'spring-context':               "org.springframework:spring-context:${springVersion}",
+        'spring-jdbc': 					"org.springframework:spring-jdbc:${springVersion}",
+        'spring-test': 					"org.springframework:spring-test:${springVersion}"
+
 ]

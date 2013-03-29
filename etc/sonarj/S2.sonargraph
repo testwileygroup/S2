@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<context version="7.1.8.189">
+    <scope name="S2" type="Project">
+        <element name="Filter" type="TypeFilterReferenceOverridden">
+            <element name="**" type="IncludeTypePattern"/>
+            <element name="by.hzv.s2.**.*Test" type="ExcludeTypePattern"/>
+        </element>
+        <architecture>
+            <element name="web tier" type="LayerGroup">
+                <element name="Assignment" type="TypeFilter">
+                    <element name="by.hzv.s2.web.**" type="IncludeTypePattern"/>
+                </element>
+                <element name="REST API" type="Layer">
+                    <element name="Assignment" type="TypeFilter">
+                        <element name="by.hzv.s2.web.rest.**" type="StrongTypePattern"/>
+                    </element>
+                </element>
+                <dependency type="AllowedDependency" toName="Project|S2::LayerGroup|business tier"/>
+            </element>
+            <element name="business tier" type="LayerGroup">
+                <element name="Assignment" type="TypeFilter"/>
+                <element name="service" type="Layer">
+                    <element name="Assignment" type="TypeFilter">
+                        <element name="by.hzv.s2.service.**" type="StrongTypePattern"/>
+                    </element>
+                </element>
+                <dependency type="AllowedDependency" toName="Project|S2::LayerGroup|data tier"/>
+            </element>
+            <element name="data tier" type="LayerGroup">
+                <element name="Assignment" type="TypeFilter"/>
+                <element name="data access" type="Layer">
+                    <element name="Assignment" type="TypeFilter">
+                        <element name="by.hzv.s2.dao.**" type="StrongTypePattern"/>
+                    </element>
+                </element>
+                <element name="model" type="Layer">
+                    <element name="Assignment" type="TypeFilter">
+                        <element name="by.hzv.s2.model.**" type="StrongTypePattern"/>
+                    </element>
+                    <stereotype name="Public"/>
+                </element>
+            </element>
+            <element name="S2-API" type="VerticalSliceGroup">
+                <element name="Assignment" type="TypeFilter">
+                    <element name="by.hzv.s2.model.**" type="IncludeTypePattern"/>
+                    <element name="by.hzv.s2.service.S2" type="StrongTypePattern"/>
+                </element>
+                <stereotype name="Public"/>
+            </element>
+            <element name="S2-Impl" type="VerticalSliceGroup">
+                <element name="Assignment" type="TypeFilter">
+                    <element name="by.hzv.s2.service.**" type="IncludeTypePattern"/>
+                    <element name="by.hzv.s2.dao.**" type="IncludeTypePattern"/>
+                    <element name="by.hzv.s2.model.entity.**" type="StrongTypePattern"/>
+                </element>
+            </element>
+        </architecture>
+        <workspace>
+            <element name="../../s2-impl/src/main/java" type="JavaRootDirectory">
+                <reference name="Project|S2::BuildUnit|s2-impl"/>
+            </element>
+            <element name="../../s2-impl/src/main/resources" type="JavaRootDirectory">
+                <reference name="Project|S2::BuildUnit|s2-impl"/>
+            </element>
+            <element name="../../s2-impl/src/test/groovy" type="JavaRootDirectory">
+                <reference name="Project|S2::BuildUnit|s2-impl"/>
+            </element>
+            <element name="../../s2-impl/src/test/resources" type="JavaRootDirectory">
+                <reference name="Project|S2::BuildUnit|s2-impl"/>
+            </element>
+            <element name="../../s2-impl/src/main/groovy" type="JavaRootDirectory">
+                <reference name="Project|S2::BuildUnit|s2-impl"/>
+            </element>
+            <element name="../../s2-impl/bin" type="JavaRootDirectory">
+                <reference name="Project|S2::BuildUnit|s2-impl"/>
+            </element>
+            <element name="../../s2-api/src/main/java" type="JavaRootDirectory">
+                <reference name="Project|S2::BuildUnit|s2-api"/>
+            </element>
+            <element name="../../s2-api/bin" type="JavaRootDirectory">
+                <reference name="Project|S2::BuildUnit|s2-api"/>
+            </element>
+        </workspace>
+        <physical>
+            <element name="S2" type="BuildUnit">
+                <dependency type="AllowedDependency" toName="Project|S2::BuildUnit|s2-api"/>
+                <dependency type="AllowedDependency" toName="Project|S2::BuildUnit|s2-impl"/>
+            </element>
+            <element name="s2-api" type="BuildUnit"/>
+            <element name="s2-impl" type="BuildUnit">
+                <dependency type="AllowedDependency" toName="Project|S2::BuildUnit|s2-api"/>
+            </element>
+        </physical>
+    </scope>
+    <scope name="External" type="External">
+        <element name="Filter" type="TypeFilter">
+            <element name="**" type="IncludeTypePattern"/>
+            <element name="java.io.*" type="ExcludeTypePattern"/>
+            <element name="java.lang.*" type="ExcludeTypePattern"/>
+            <element name="java.lang.annotation.*" type="ExcludeTypePattern"/>
+            <element name="java.lang.ref.*" type="ExcludeTypePattern"/>
+            <element name="java.math.*" type="ExcludeTypePattern"/>
+            <element name="java.nio.*" type="ExcludeTypePattern"/>
+            <element name="java.nio.channels.*" type="ExcludeTypePattern"/>
+            <element name="java.nio.channels.spi.*" type="ExcludeTypePattern"/>
+            <element name="java.nio.charset.*" type="ExcludeTypePattern"/>
+            <element name="java.nio.charset.spi.*" type="ExcludeTypePattern"/>
+            <element name="java.text.*" type="ExcludeTypePattern"/>
+            <element name="java.util.*" type="ExcludeTypePattern"/>
+            <element name="java.util.jar.*" type="ExcludeTypePattern"/>
+            <element name="java.util.prefs.*" type="ExcludeTypePattern"/>
+            <element name="java.util.regex.*" type="ExcludeTypePattern"/>
+            <element name="java.util.zip.*" type="ExcludeTypePattern"/>
+        </element>
+    </scope>
+    <scope name="Global" type="Global">
+        <element name="Configuration" type="Configuration"/>
+        <element name="Filter" type="TypeFilter">
+            <element name="**" type="IncludeTypePattern"/>
+        </element>
+    </scope>
+</context>
