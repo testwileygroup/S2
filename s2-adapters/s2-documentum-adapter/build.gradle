@@ -1,0 +1,16 @@
+dependencies {
+    compile project(':s2-api')
+    compile libraries.'commons-io'
+    //compile libraries.'spring-jdbc'
+    compile libraries.'spring-test'
+    //runtime libraries.'aspectjrt'
+    //runtime libraries.'hsqldb'
+    compile 'org.functionaljava:functionaljava:3.1'
+
+
+    compile fileTree (dir: 'lib/dctm', includes: ['*.jar'])
+}
+
+/* workaround for hybrid module (Java, Groovy). More details here http://issues.gradle.org/browse/GRADLE-1190 */
+//sourceSets.main.java.srcDirs = []
+//sourceSets.main.groovy.srcDir 'src/main/java'

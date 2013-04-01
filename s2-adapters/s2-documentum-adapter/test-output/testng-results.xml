@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="76817" started-at="2013-03-29T18:38:18Z" finished-at="2013-03-29T18:39:35Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="76817" started-at="2013-03-29T18:38:18Z" finished-at="2013-03-29T18:39:35Z">
+      <class name="com.wiley.cms.vela.service.commons.dctm.DctmContentServerImplTest">
+        <test-method status="PASS" signature="springTestContextBeforeTestClass()[pri:0, instance:com.wiley.cms.vela.service.commons.dctm.DctmContentServerImplTest@5183a17c]" name="springTestContextBeforeTestClass" is-config="true" duration-ms="0" started-at="2013-03-29T22:38:18Z" finished-at="2013-03-29T22:38:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestClass -->
+        <test-method status="PASS" signature="springTestContextPrepareTestInstance()[pri:0, instance:com.wiley.cms.vela.service.commons.dctm.DctmContentServerImplTest@5183a17c]" name="springTestContextPrepareTestInstance" is-config="true" duration-ms="12045" started-at="2013-03-29T22:38:18Z" depends-on-methods="org.springframework.test.context.testng.AbstractTestNGSpringContextTests.springTestContextBeforeTestClass" finished-at="2013-03-29T22:38:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextPrepareTestInstance -->
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)[pri:0, instance:com.wiley.cms.vela.service.commons.dctm.DctmContentServerImplTest@5183a17c]" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="0" started-at="2013-03-29T22:38:30Z" finished-at="2013-03-29T22:38:30Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.wiley.cms.vela.service.commons.dctm.DctmContentServerImplTest.shouldImportDocument()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestMethod -->
+        <test-method status="PASS" signature="init()[pri:0, instance:com.wiley.cms.vela.service.commons.dctm.DctmContentServerImplTest@5183a17c]" name="init" is-config="true" duration-ms="5694" started-at="2013-03-29T22:38:30Z" finished-at="2013-03-29T22:38:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method status="PASS" signature="shouldImportDocument()[pri:0, instance:com.wiley.cms.vela.service.commons.dctm.DctmContentServerImplTest@5183a17c]" name="shouldImportDocument" duration-ms="26520" started-at="2013-03-29T22:38:36Z" finished-at="2013-03-29T22:39:03Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- shouldImportDocument -->
+        <test-method status="PASS" signature="cleanup()[pri:0, instance:com.wiley.cms.vela.service.commons.dctm.DctmContentServerImplTest@5183a17c]" name="cleanup" is-config="true" duration-ms="32542" started-at="2013-03-29T22:39:03Z" finished-at="2013-03-29T22:39:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cleanup -->
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)[pri:0, instance:com.wiley.cms.vela.service.commons.dctm.DctmContentServerImplTest@5183a17c]" name="springTestContextAfterTestMethod" is-config="true" duration-ms="0" started-at="2013-03-29T22:39:35Z" finished-at="2013-03-29T22:39:35Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.wiley.cms.vela.service.commons.dctm.DctmContentServerImplTest.shouldImportDocument()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestMethod -->
+        <test-method status="PASS" signature="springTestContextAfterTestClass()[pri:0, instance:com.wiley.cms.vela.service.commons.dctm.DctmContentServerImplTest@5183a17c]" name="springTestContextAfterTestClass" is-config="true" duration-ms="0" started-at="2013-03-29T22:39:35Z" finished-at="2013-03-29T22:39:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestClass -->
+      </class> <!-- com.wiley.cms.vela.service.commons.dctm.DctmContentServerImplTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

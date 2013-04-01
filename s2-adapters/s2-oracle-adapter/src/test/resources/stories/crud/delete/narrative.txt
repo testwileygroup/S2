@@ -1,0 +1,5 @@
+Delete
+
+I as a user of S2
+Want to be able to delete unused content
+In order to free space for new content

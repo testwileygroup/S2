@@ -36,7 +36,7 @@ public interface S2 {
     void deleteFileByPath(String filePath);
 
     /**
-     * Recursively deletes all child folder and files for the folder specified by Folder ID
+     * Recursively deletes all child folders and files for the folder specified by Folder ID
      *
      * @param fid - Folder ID
      */
@@ -82,4 +82,13 @@ public interface S2 {
      * @return logical path or null
      */
     String getPath(String fid);
+
+    /**
+     * Performs Vendor-specific operation, e.g. checkout file.
+     *
+     * @param opName - operation name
+     * @param parameters - operation parameters
+     * @return result of operation
+     */
+    Object rpc(String opName, Map<String, ?> parameters);
 }

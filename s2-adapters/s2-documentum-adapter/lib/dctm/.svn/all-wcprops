@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/projects/Vela/!svn/ver/15728/branches/jqa-1.1-rc/Vela-Commons/lib/java/dctm
+END
+configservice-impl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/projects/Vela/!svn/ver/15728/branches/jqa-1.1-rc/Vela-Commons/lib/java/dctm/configservice-impl.jar
+END
+collaboration.jar
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/projects/Vela/!svn/ver/15728/branches/jqa-1.1-rc/Vela-Commons/lib/java/dctm/collaboration.jar
+END
+certjFIPS.jar
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/projects/Vela/!svn/ver/15728/branches/jqa-1.1-rc/Vela-Commons/lib/java/dctm/certjFIPS.jar
+END
+collaborationPriv.jar
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/projects/Vela/!svn/ver/15728/branches/jqa-1.1-rc/Vela-Commons/lib/java/dctm/collaborationPriv.jar
+END
+jsafeFIPS.jar
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/projects/Vela/!svn/ver/15728/branches/jqa-1.1-rc/Vela-Commons/lib/java/dctm/jsafeFIPS.jar
+END
+dfc.jar
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/projects/Vela/!svn/ver/15728/branches/jqa-1.1-rc/Vela-Commons/lib/java/dctm/dfc.jar
+END
+configservice-api.jar
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/projects/Vela/!svn/ver/15728/branches/jqa-1.1-rc/Vela-Commons/lib/java/dctm/configservice-api.jar
+END
+aspectjrt.jar
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/projects/Vela/!svn/ver/15728/branches/jqa-1.1-rc/Vela-Commons/lib/java/dctm/aspectjrt.jar
+END
+attachmentsoperations.jar
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/projects/Vela/!svn/ver/15728/branches/jqa-1.1-rc/Vela-Commons/lib/java/dctm/attachmentsoperations.jar
+END
+dctmutils-common-1.6.jar
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/projects/Vela/!svn/ver/15728/branches/jqa-1.1-rc/Vela-Commons/lib/java/dctm/dctmutils-common-1.6.jar
+END

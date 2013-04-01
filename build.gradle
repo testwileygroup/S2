@@ -28,7 +28,7 @@ allprojects {
     }
 }
 
-subprojects {
+subprojects { prj ->
     apply plugin: 'java'
     apply plugin: 'groovy'
     apply from: "${rootProject.projectDir}/tool/checkstyle/config/checkstyle.gradle"
@@ -37,6 +37,10 @@ subprojects {
 
 
     dependencies {
+    	if (!prj.name.equals('s2-api')) {
+    		compile project(':s2-api')
+    	}
+    
         compile libraries.'insight-annotation'
         compile libraries.'slf4j-api'
         compile libraries.'spring-context'

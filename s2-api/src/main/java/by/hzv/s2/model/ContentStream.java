@@ -8,4 +8,6 @@ import java.io.InputStream;
  */
 public interface ContentStream {
     InputStream getStream();
+    boolean isProxy();
+    String getUrl();
 }
