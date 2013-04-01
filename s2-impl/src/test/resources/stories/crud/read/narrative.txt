@@ -1,5 +1,0 @@
-Read
-
-I as a user of S2
-Want to be able to access content and metadata of files stored in S2
-In order to use them
