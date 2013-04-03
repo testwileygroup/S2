@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import by.hzv.s2.model.ContentStream;
 import by.hzv.s2.model.FileInfo;
+import by.hzv.s2.model.SimpleContentStream;
 import by.hzv.s2.service.S2;
 
 import com.documentum.fc.client.IDfDocument;
 import com.documentum.fc.client.IDfFolder;
 import com.documentum.fc.common.DfException;
 import com.wiley.cms.vela.service.commons.dctm.DctmContentServer;
-import com.wiley.cms.vela.service.commons.dctm.DctmContentStream;
 import com.wiley.cms.vela.service.commons.dctm.DctmDaoImpl;
 
 /**
@@ -73,12 +73,12 @@ public class DocumentumConnector implements S2 {
 
     @Override
     public ContentStream getContentStream(String fid) {
-        return new DctmContentStream(contentServer.getDocContent(fid));
+        return new SimpleContentStream(contentServer.getDocContent(fid));
     }
 
     @Override
     public ContentStream getContentStreamByPath(String filePath) {
-        return new DctmContentStream(contentServer.getDocContentByPath(filePath));
+        return new SimpleContentStream(contentServer.getDocContentByPath(filePath));
     }
 
     @Override

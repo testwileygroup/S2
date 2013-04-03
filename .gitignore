@@ -14,5 +14,6 @@ interpolated-*.xml
 out
 *.ignore
 .gradle
+.groovy
 build
 bin

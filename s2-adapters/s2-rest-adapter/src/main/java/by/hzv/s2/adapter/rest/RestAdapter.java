@@ -12,6 +12,6 @@ import by.hzv.s2.service.S2;
  */
 @Controller
 public class RestAdapter {
-	@Autowired
-	private S2 s2;
+    @Autowired
+    private S2 s2;
 }

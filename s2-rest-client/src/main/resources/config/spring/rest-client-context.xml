@@ -9,8 +9,7 @@
     <import resource="classpath:/config/spring/**/*-config.xml" />
 
     <!-- enable Spring annotation support -->
-    <context:component-scan base-package="by.hzv.s2.adapter.rest" >
+    <context:component-scan base-package="by.hzv.s2.client.rest" >
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
-
 </beans>

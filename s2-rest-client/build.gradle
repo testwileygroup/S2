@@ -1,0 +1,6 @@
+dependencies {   
+    compile libraries.'spring-test'
+	compile libraries.'spring-web'
+	compile libraries.'commons-io'
+	compile libraries.'jackson'
+}

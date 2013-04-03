@@ -12,6 +12,8 @@ import org.testng.annotations.AfterMethod
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 
+import by.hzv.s2.model.SimpleContentStream
+
 import com.documentum.fc.client.DfIdNotFoundException
 import com.documentum.fc.client.IDfDocument
 import com.documentum.fc.client.IDfFolder
@@ -58,7 +60,7 @@ class DctmContentServerImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void shouldImportDocument() {
         def docid = sut.importDoc("/Temp/dctmContentServerTest.txt", "dm_document",
-                new DctmContentStream(testDoc.inputStream))
+            new SimpleContentStream(testDoc.inputStream))
         assertThat sessionFactory.currentSession.getObject(new DfId(docid)) isNotNull()
     }
 
