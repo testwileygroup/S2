@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate
 import by.hzv.s2.model.ContentStream
 import by.hzv.s2.model.FileInfo
 import by.hzv.s2.model.SimpleContentStream
+import by.hzv.s2.model.SimpleFileInfo
 import by.hzv.s2.service.S2
 
 /**
@@ -34,11 +35,11 @@ class S2RestClient implements S2 {
     @PostConstruct
     void init() {
         /* normalize S2 url */
-        s2url = s2url.endsWith(SLASH) ? s2url : s2url + SLASH;
+        s2url = s2url.endsWith(SLASH) ? s2url[0..-2] : s2url;
     }
 
     @Override
-    public String createFile(String filePath, ContentStream content, Map<String, ?> properties) {
+    String createFile(String filePath, ContentStream content, Map<String, ?> properties) {
         Validate.notNull(content.getStream(), "Content stream with null stream is not allowed")
 
         try {
@@ -49,36 +50,35 @@ class S2RestClient implements S2 {
                 "properties" : properties
             ])
 
-            return restTemplate.postForObject(s2url, parts, String);
+            return restTemplate.postForObject(s2url + SLASH, parts, String);
         } catch (IOException e) {
             throw new RuntimeException()
         }
     }
 
     @Override
-    public void deleteFile(String fid) {
-        restTemplate.delete(s2url + "{fid}", fid)
+    void deleteFile(String fid) {
+        restTemplate.delete(s2url + "/{fid}", fid)
     }
 
     @Override
-    public void deleteFileByPath(String filePath) {
-        restTemplate.delete(s2url + "{path}?path=true", filePath)
+    void deleteFileByPath(String filePath) {
+        restTemplate.delete(s2url + "/urn/{path}", filePath)
     }
 
     @Override
-    public void deleteFolder(String fid) {
-        restTemplate.delete(s2url + "folders/{fid}", fid)
+    void deleteFolder(String fid) {
+        restTemplate.delete(s2url + "/folders/{fid}", fid)
     }
 
     @Override
-    public Collection<FileInfo> listFiles(String fid) {
-        // TODO Auto-generated method stub
-        return null;
+    Collection<FileInfo> listFiles(String fid) {
+        restTemplate.getForObject(s2url + "/metadata/folders/{fid}/files", SimpleFileInfo[], fid)
     }
 
     @Override
-    public ContentStream getContentStream(String fid) {
-        Resource response = restTemplate.getForObject(s2url + "{fid}", Resource, fid)
+    ContentStream getContentStream(String fid) {
+        Resource response = restTemplate.getForObject(s2url + "/{fid}", Resource, fid)
 
         try {
             return new SimpleContentStream(response.getInputStream())
@@ -88,8 +88,8 @@ class S2RestClient implements S2 {
     }
 
     @Override
-    public ContentStream getContentStreamByPath(String filePath) {
-        Resource response = restTemplate.getForObject(s2url + "{path}?path=true", Resource, filePath)
+    ContentStream getContentStreamByPath(String filePath) {
+        Resource response = restTemplate.getForObject(s2url + "/urn/{path}", Resource, filePath)
 
         try {
             return new SimpleContentStream(response.getInputStream())
@@ -99,17 +99,17 @@ class S2RestClient implements S2 {
     }
 
     @Override
-    public String getFid(String path) {
-        return restTemplate.getForObject(s2url + "keys/{path}?path", String, path)
+    String getPath(String fid) {
+        return restTemplate.getForObject(s2url + "/keys/{fid}", String, fid)
     }
 
     @Override
-    public String getPath(String fid) {
-        return restTemplate.getForObject(s2url + "keys/{fid}", String, fid)
+    String getFid(String path) {
+        return restTemplate.getForObject(s2url + "/keys/urn/{path}", String, path)
     }
 
     @Override
-    public Object rpc(String opName, Map<String, ?> parameters) {
-        return restTemplate.postForObject(s2url + "rpc/{fid}", parameters, String, opName)
+    Object rpc(String opName, Map<String, ?> parameters) {
+        return restTemplate.postForObject(s2url + "/rpc/{fid}", parameters, String, opName)
     }
 }

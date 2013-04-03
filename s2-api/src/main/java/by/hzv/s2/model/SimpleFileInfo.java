@@ -6,12 +6,14 @@ import java.math.BigInteger;
  * @author <a href="mailto:dkotsubo@wiley.com">Dmitry Kotsubo</a>
  * @since 02.04.2013
  */
+//FIXME provide hashcode and equals implementation
 public class SimpleFileInfo implements FileInfo {
     private String flid;
     private String filename;
     private String extension;
     private BigInteger size;
 
+    public SimpleFileInfo() {}
 
     public SimpleFileInfo(String flid, String filename, String extension, BigInteger size) {
         this.flid = flid;

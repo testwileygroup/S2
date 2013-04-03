@@ -1,199 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="1" total="4" passed="3">
+<testng-results skipped="0" failed="0" total="13" passed="13">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="30669" started-at="2013-04-03T11:35:35Z" finished-at="2013-04-03T11:36:05Z">
+  <suite name="Default suite" duration-ms="527" started-at="2013-04-03T14:09:10Z" finished-at="2013-04-03T14:09:11Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="30669" started-at="2013-04-03T11:35:35Z" finished-at="2013-04-03T11:36:05Z">
-      <class name="by.hzv.s2.client.rest.S2StreamResourceTest">
-        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2StreamResourceTest@5292c365]" name="setup" is-config="true" duration-ms="5" started-at="2013-04-03T15:35:35Z" finished-at="2013-04-03T15:35:35Z">
+    <test name="Default test" duration-ms="527" started-at="2013-04-03T14:09:10Z" finished-at="2013-04-03T14:09:11Z">
+      <class name="by.hzv.s2.client.rest.S2RestClientTest">
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="115" started-at="2013-04-03T18:09:10Z" finished-at="2013-04-03T18:09:10Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method status="PASS" signature="filenameShouldBeProvided()[pri:0, instance:by.hzv.s2.client.rest.S2StreamResourceTest@5292c365]" name="filenameShouldBeProvided" duration-ms="63" started-at="2013-04-03T15:35:35Z" finished-at="2013-04-03T15:35:35Z">
-          <exception class="java.lang.NullPointerException">
-            <message>
-              <![CDATA[Filename should be provided]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.NullPointerException: Filename should be provided
-	at org.apache.commons.lang3.Validate.notNull(Validate.java:222)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
-	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
-	at org.codehaus.groovy.runtime.callsite.StaticMetaMethodSite.invoke(StaticMetaMethodSite.java:43)
-	at org.codehaus.groovy.runtime.callsite.StaticMetaMethodSite.call(StaticMetaMethodSite.java:88)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:120)
-	at by.hzv.s2.client.rest.S2StreamResource.<init>(S2StreamResource.groovy:25)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
-	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:57)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:194)
-	at by.hzv.s2.client.rest.S2StreamResourceTest.filenameShouldBeProvided(S2StreamResourceTest.groovy:29)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-	at org.testng.TestRunner.privateRun(TestRunner.java:767)
-	at org.testng.TestRunner.run(TestRunner.java:617)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
-	at org.testng.TestNG.run(TestNG.java:1057)
-	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.NullPointerException -->
+        <test-method status="PASS" signature="getContentStreamByPath()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="getContentStreamByPath" duration-ms="135" started-at="2013-04-03T18:09:10Z" finished-at="2013-04-03T18:09:11Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- filenameShouldBeProvided -->
-        <test-method status="PASS" signature="inputStreamShouldBeProvided()[pri:0, instance:by.hzv.s2.client.rest.S2StreamResourceTest@5292c365]" name="inputStreamShouldBeProvided" duration-ms="1" started-at="2013-04-03T15:35:35Z" finished-at="2013-04-03T15:35:35Z">
-          <exception class="java.lang.NullPointerException">
-            <message>
-              <![CDATA[Input stream should be provided]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.NullPointerException: Input stream should be provided
-	at org.apache.commons.lang3.Validate.notNull(Validate.java:222)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
-	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
-	at org.codehaus.groovy.runtime.callsite.StaticMetaMethodSite.invoke(StaticMetaMethodSite.java:43)
-	at org.codehaus.groovy.runtime.callsite.StaticMetaMethodSite.call(StaticMetaMethodSite.java:88)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:120)
-	at by.hzv.s2.client.rest.S2StreamResource.<init>(S2StreamResource.groovy:28)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
-	at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:77)
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:102)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:57)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:182)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:194)
-	at by.hzv.s2.client.rest.S2StreamResourceTest.inputStreamShouldBeProvided(S2StreamResourceTest.groovy:36)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-	at org.testng.TestRunner.privateRun(TestRunner.java:767)
-	at org.testng.TestRunner.run(TestRunner.java:617)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
-	at org.testng.TestNG.run(TestNG.java:1057)
-	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.NullPointerException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- inputStreamShouldBeProvided -->
-        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2StreamResourceTest@5292c365]" name="setup" is-config="true" duration-ms="0" started-at="2013-04-03T15:35:35Z" finished-at="2013-04-03T15:35:35Z">
+        </test-method> <!-- getContentStreamByPath -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="1" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2StreamResourceTest@5292c365]" name="setup" is-config="true" duration-ms="0" started-at="2013-04-03T15:35:35Z" finished-at="2013-04-03T15:35:35Z">
+        <test-method status="PASS" signature="getFid()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="getFid" duration-ms="48" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getFid -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="0" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method status="PASS" signature="shouldReturnContentLength()[pri:0, instance:by.hzv.s2.client.rest.S2StreamResourceTest@5292c365]" name="shouldReturnContentLength" duration-ms="105" started-at="2013-04-03T15:35:35Z" finished-at="2013-04-03T15:35:35Z">
+        <test-method status="PASS" signature="getPath()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="getPath" duration-ms="3" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- shouldReturnContentLength -->
-        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2StreamResourceTest@5292c365]" name="setup" is-config="true" duration-ms="1" started-at="2013-04-03T15:35:35Z" finished-at="2013-04-03T15:35:35Z">
+        </test-method> <!-- getPath -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="0" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method status="FAIL" signature="shouldReturnFilename()[pri:0, instance:by.hzv.s2.client.rest.S2StreamResourceTest@5292c365]" name="shouldReturnFilename" duration-ms="30468" started-at="2013-04-03T15:35:35Z" finished-at="2013-04-03T15:36:05Z">
-          <exception class="java.lang.AssertionError">
-            <message>
-              <![CDATA[expecting actual value not to be null]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: expecting actual value not to be null
-	at org.fest.assertions.Fail.failure(Fail.java:228)
-	at org.fest.assertions.Fail.fail(Fail.java:167)
-	at org.fest.assertions.Fail.failIfActualIsNull(Fail.java:100)
-	at org.fest.assertions.GenericAssert.isNotNull(GenericAssert.java:238)
-	at org.fest.assertions.GenericAssert$isNotNull.call(Unknown Source)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:112)
-	at by.hzv.s2.client.rest.S2StreamResourceTest.shouldReturnFilename(S2StreamResourceTest.groovy:44)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
-	at org.testng.TestRunner.privateRun(TestRunner.java:767)
-	at org.testng.TestRunner.run(TestRunner.java:617)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
-	at org.testng.TestNG.run(TestNG.java:1057)
-	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
+        <test-method status="PASS" signature="rpc(java.lang.String)[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="rpc" duration-ms="28" started-at="2013-04-03T18:09:11Z" data-provider="jsonResponseProvider" finished-at="2013-04-03T18:09:11Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[{ "firstName":"John" , "lastName":"Doe" }]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- shouldReturnFilename -->
-      </class> <!-- by.hzv.s2.client.rest.S2StreamResourceTest -->
+        </test-method> <!-- rpc -->
+        <test-method status="PASS" signature="rpc(java.lang.String)[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="rpc" duration-ms="2" started-at="2013-04-03T18:09:11Z" data-provider="jsonResponseProvider" finished-at="2013-04-03T18:09:11Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[String]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- rpc -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="0" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="0" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="rpc(java.lang.String)[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="rpc" duration-ms="1" started-at="2013-04-03T18:09:11Z" data-provider="jsonResponseProvider" finished-at="2013-04-03T18:09:11Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- rpc -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="0" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="shouldCreateFile()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="shouldCreateFile" duration-ms="65" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- shouldCreateFile -->
+        <test-method status="PASS" signature="shouldDeleteFileByFid()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="shouldDeleteFileByFid" duration-ms="3" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- shouldDeleteFileByFid -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="0" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="0" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="shouldDeleteFileByPath()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="shouldDeleteFileByPath" duration-ms="2" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- shouldDeleteFileByPath -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="1" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="shouldDeleteFolder()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="shouldDeleteFolder" duration-ms="1" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- shouldDeleteFolder -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="1" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="shouldNormalizeBaseUrlOnInit()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="shouldNormalizeBaseUrlOnInit" duration-ms="5" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- shouldNormalizeBaseUrlOnInit -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="0" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="shouldReturnContentByFid()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="shouldReturnContentByFid" duration-ms="2" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- shouldReturnContentByFid -->
+        <test-method status="PASS" signature="shouldReturnFileInfoList()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="shouldReturnFileInfoList" duration-ms="87" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- shouldReturnFileInfoList -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:by.hzv.s2.client.rest.S2RestClientTest@5210563]" name="setup" is-config="true" duration-ms="0" started-at="2013-04-03T18:09:11Z" finished-at="2013-04-03T18:09:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+      </class> <!-- by.hzv.s2.client.rest.S2RestClientTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

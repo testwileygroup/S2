@@ -3,12 +3,12 @@
 <suite name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="by.hzv.s2.client.rest.S2StreamResourceTest">
+      <class name="by.hzv.s2.client.rest.S2RestClientTest">
         <methods>
           <include name="setup"/>
-          <include name="shouldReturnFilename"/>
+          <include name="shouldReturnFileInfoList"/>
         </methods>
-      </class> <!-- by.hzv.s2.client.rest.S2StreamResourceTest -->
+      </class> <!-- by.hzv.s2.client.rest.S2RestClientTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
