@@ -60,8 +60,8 @@ class S2RestClientTest {
     public void shouldCreateFile() {
         // Given
         mockServer.expect(requestTo("${BASE_URL}/"))
-        .andExpect(method(HttpMethod.POST))
-        .andRespond(withSuccess(ANY_FID, MediaType.TEXT_PLAIN));
+            .andExpect(method(HttpMethod.POST))
+            .andRespond(withSuccess(ANY_FID, MediaType.TEXT_PLAIN));
         ContentStream contentStream = new SimpleContentStream(stream)
         // When
         String result = sut.createFile(ANY_FILE_PATH, contentStream, [:])
@@ -74,8 +74,8 @@ class S2RestClientTest {
     public void shouldDeleteFileByFid() {
         // Given
         mockServer.expect(requestTo("${BASE_URL}/${ANY_FID}"))
-        .andExpect(method(HttpMethod.DELETE))
-        .andRespond(withSuccess());
+            .andExpect(method(HttpMethod.DELETE))
+            .andRespond(withSuccess());
         ContentStream contentStream = new SimpleContentStream(stream)
         // When
         sut.deleteFile(ANY_FID)
@@ -88,8 +88,8 @@ class S2RestClientTest {
     public void shouldDeleteFileByPath() {
         // Given
         mockServer.expect(requestTo("${BASE_URL}/urn/${ANY_FILE_PATH}"))
-        .andExpect(method(HttpMethod.DELETE))
-        .andRespond(withSuccess());
+            .andExpect(method(HttpMethod.DELETE))
+            .andRespond(withSuccess());
         ContentStream contentStream = new SimpleContentStream(stream)
         // When
         sut.deleteFileByPath(ANY_FILE_PATH)
@@ -101,8 +101,8 @@ class S2RestClientTest {
     public void shouldDeleteFolder() {
         // Given
         mockServer.expect(requestTo("${BASE_URL}/folders/${ANY_FID}"))
-        .andExpect(method(HttpMethod.DELETE))
-        .andRespond(withSuccess());
+            .andExpect(method(HttpMethod.DELETE))
+            .andRespond(withSuccess());
         ContentStream contentStream = new SimpleContentStream(stream)
         // When
         sut.deleteFolder(ANY_FID)
@@ -114,8 +114,8 @@ class S2RestClientTest {
     public void shouldReturnContentByFid() {
         // Given
         mockServer.expect(requestTo("${BASE_URL}/${ANY_FID}"))
-        .andExpect(method(HttpMethod.GET))
-        .andRespond(withSuccess(ANY_CONTENT, MediaType.APPLICATION_OCTET_STREAM));
+            .andExpect(method(HttpMethod.GET))
+            .andRespond(withSuccess(ANY_CONTENT, MediaType.APPLICATION_OCTET_STREAM));
         ContentStream contentStream = new SimpleContentStream(stream)
         // When
         sut.getContentStream(ANY_FID)
@@ -127,8 +127,8 @@ class S2RestClientTest {
     public void getContentStreamByPath() {
         // Given
         mockServer.expect(requestTo("${BASE_URL}/urn/${ANY_FILE_PATH}"))
-        .andExpect(method(HttpMethod.GET))
-        .andRespond(withSuccess(ANY_CONTENT, MediaType.APPLICATION_OCTET_STREAM));
+            .andExpect(method(HttpMethod.GET))
+            .andRespond(withSuccess(ANY_CONTENT, MediaType.APPLICATION_OCTET_STREAM));
         ContentStream contentStream = new SimpleContentStream(stream)
         // When
         sut.getContentStreamByPath(ANY_FILE_PATH)
@@ -140,8 +140,8 @@ class S2RestClientTest {
     public void getFid() {
         // Given
         mockServer.expect(requestTo("${BASE_URL}/keys/urn/${ANY_PATH}"))
-        .andExpect(method(HttpMethod.GET))
-        .andRespond(withSuccess(ANY_FID, MediaType.TEXT_PLAIN));
+            .andExpect(method(HttpMethod.GET))
+            .andRespond(withSuccess(ANY_FID, MediaType.TEXT_PLAIN));
         // When
         String path = sut.getFid(ANY_PATH)
         // Then
@@ -153,8 +153,8 @@ class S2RestClientTest {
     public void getPath() {
         // Given
         mockServer.expect(requestTo("${BASE_URL}/keys/${ANY_FID}"))
-        .andExpect(method(HttpMethod.GET))
-        .andRespond(withSuccess(ANY_PATH, MediaType.TEXT_PLAIN));
+            .andExpect(method(HttpMethod.GET))
+            .andRespond(withSuccess(ANY_PATH, MediaType.TEXT_PLAIN));
         // When
         String fid = sut.getPath(ANY_FID)
         // Then
@@ -175,8 +175,8 @@ class S2RestClientTest {
     public void rpc(String jsonResponse) {
         // Given
         mockServer.expect(requestTo("${BASE_URL}/rpc/${ANY_OP_NAME}"))
-        .andExpect(method(HttpMethod.POST))
-        .andRespond(withSuccess(jsonResponse, MediaType.APPLICATION_JSON));
+            .andExpect(method(HttpMethod.POST))
+            .andRespond(withSuccess(jsonResponse, MediaType.APPLICATION_JSON));
         // When
         Object result = sut.rpc(ANY_OP_NAME, [:])
         // Then
