@@ -1,6 +1,4 @@
 dependencies {
-    compile project(':s2-api')
-    compile libraries.'commons-io'
     //compile libraries.'spring-jdbc'
     compile libraries.'spring-test'
     //runtime libraries.'aspectjrt'

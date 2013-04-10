@@ -21,6 +21,7 @@ configurations {
 }
 
 allprojects {
+    apply plugin: 'idea'
     repositories {
         mavenCentral()
         maven { url "http://repo.springsource.org/libs-release" }
@@ -37,15 +38,18 @@ subprojects { prj ->
 
 
     dependencies {
-    	if (!prj.name.equals('s2-api')) {
-    		compile project(':s2-api')
-    	}
-    
-        compile libraries.'insight-annotation'
+        if (!prj.name.equals('s2-api')) {
+            compile project(':s2-api')
+        }
+
         compile libraries.'slf4j-api'
+        compile libraries.'insight-annotation'
         compile libraries.'spring-context'
         compile libraries.'commons-lang3'
         compile libraries.'guava'
+        compile libraries.'commons-io'
+        compile libraries.'jackson'
+
 
         groovy libraries.'groovy-all-indy'
         testCompile libraries.'fest-assert'

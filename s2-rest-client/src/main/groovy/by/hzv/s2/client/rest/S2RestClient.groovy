@@ -45,7 +45,7 @@ class S2RestClient implements S2 {
         try {
             MultiValueMap<String, Object> parts = new LinkedMultiValueMap<String, Object>()
             parts.setAll([
-                "path": filePath,
+                "filePath": filePath,
                 "content" : new S2StreamResource(content.getStream(), FilenameUtils.getName(filePath)),
                 "properties" : properties
             ])

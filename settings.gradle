@@ -1,1 +1,4 @@
-include 's2-api', 's2-rest-client', ':s2-adapters:s2-documentum-adapter', ':s2-adapters:s2-rest-adapter'
+include 's2-api'
+include 's2-rest-client'
+include ':s2-adapters:s2-rest-adapter'
+include ':s2-adapters:s2-documentum-adapter'

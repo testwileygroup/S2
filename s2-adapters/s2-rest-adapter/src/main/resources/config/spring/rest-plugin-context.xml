@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd"
+       xmlns:mvc="http://www.springframework.org/schema/mvc">
 
-     <!-- import layered application specific configuration -->
-    <import resource="classpath:/config/spring/**/*-config.xml" />
+
+    <!-- import layered application specific configuration -->
+    <import resource="classpath:/config/spring/**/*-config.xml"/>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+<!--             <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/> -->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prettyPrint" value="true"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="#{1024 * 1024 * 1024}" />
+    </bean>
 
     <!-- enable Spring annotation support -->
-    <context:component-scan base-package="by.hzv.s2.adapter.rest" >
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-    </context:component-scan>
-
+    <context:component-scan base-package="by.hzv.s2.adapter.rest" />
 </beans>

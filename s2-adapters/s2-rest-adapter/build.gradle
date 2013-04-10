@@ -1,0 +1,7 @@
+dependencies {
+    compile libraries.'servlet-api'
+    compile libraries.'spring-webmvc'
+    testCompile libraries.'spring-test'
+
+    runtime 'commons-fileupload:commons-fileupload:1.3'
+}

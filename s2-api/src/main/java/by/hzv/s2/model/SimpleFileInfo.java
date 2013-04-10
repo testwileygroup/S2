@@ -6,8 +6,10 @@ import java.math.BigInteger;
  * @author <a href="mailto:dkotsubo@wiley.com">Dmitry Kotsubo</a>
  * @since 02.04.2013
  */
-//FIXME provide hashcode and equals implementation
 public class SimpleFileInfo implements FileInfo {
+    public static final int HASH_SEED = 17;
+    public static final int HASH_OFFSET = 37;
+
     private String flid;
     private String filename;
     private String extension;
@@ -68,5 +70,25 @@ public class SimpleFileInfo implements FileInfo {
 
     public void setSize(BigInteger size) {
         this.size = size;
+    }
+
+    @Override
+    public int hashCode(){
+        int hash = HASH_SEED * HASH_OFFSET + flid.hashCode();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof FileInfo)) {
+            return false;
+        }
+
+        FileInfo fInfo = (FileInfo) o;
+        return fInfo.getFlid().equals(getFlid());
     }
 }
