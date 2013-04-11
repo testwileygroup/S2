@@ -41,7 +41,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 public class RestAdapterTest extends AbstractTestNGSpringContextTests {
     private final String fid = "999"
     private final String path = "/any/path/to/file.ext"
-    private final String urlEncodedPath = URLEncoder.encode(path, 'UTF-8')
     private final String url = "http://any.url.to.file"
 
     @Autowired
@@ -65,7 +64,7 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
         given s2.getContentStream(fid) willReturn proxy
 
         //when
-        def result = mockMvc.perform(get("/${fid}"))
+        def result = mockMvc.perform(get("/{fid}", fid))
 
         //then
         result.andExpect status().isMovedTemporarily() // should redirect to URL with content
@@ -82,7 +81,7 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
         given s2.getContentStream(fid) willReturn new SimpleContentStream(new ByteArrayInputStream(expectedContent))
 
         //when
-        def result = mockMvc.perform(get("/${fid}"))
+        def result = mockMvc.perform(get("/{fid}", fid))
 
         //then
         result.andExpect status().isOk()
@@ -97,7 +96,7 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
         given s2.getContentStreamByPath(path) willReturn new SimpleContentStream(new ByteArrayInputStream(expectedContent))
 
         //when
-        def result = mockMvc.perform(get("/urn/${urlEncodedPath}"))
+        def result = mockMvc.perform(get("/urn/{path}", path))
 
         //then
         result.andExpect(status().isOk())
@@ -113,7 +112,7 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
         given s2.getContentStreamByPath(path) willReturn proxy
 
         //when
-        def result = mockMvc.perform(get("/urn/${urlEncodedPath}"))
+        def result = mockMvc.perform(get("/urn/{path}", path))
 
         //then
         result.andExpect status().isMovedTemporarily() // should redirect to URL with content
@@ -131,7 +130,7 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
         given s2.listFiles(fid) willReturn([fileInfo])
 
         //when
-        def result = mockMvc.perform(get("/metadata/folders/${fid}/files/"))
+        def result = mockMvc.perform(get("/metadata/folders/{fid}/files/", fid))
 
         //then
         result.andExpect status().isOk()
@@ -144,7 +143,7 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
     @Test
     public void shouldDeleteFileByFId() throws Exception {
         //when
-        def result = mockMvc.perform(delete("/${fid}"))
+        def result = mockMvc.perform(delete("/{fid}", fid))
 
         //then
         result.andExpect status().isOk()
@@ -154,7 +153,7 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
     @Test
     public void shouldDeleteFileByPath() throws Exception {
         //when
-        def result = mockMvc.perform(delete("/urn/${urlEncodedPath}"))
+        def result = mockMvc.perform(delete("/urn/{path}", path))
 
         //then
         result.andExpect status().isOk()
@@ -165,7 +164,7 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
     @Test
     public void shouldDeleteFolderByFId() throws Exception {
         //when
-        def result = mockMvc.perform(delete("/folders/${fid}"))
+        def result = mockMvc.perform(delete("/folders/{fid}", fid))
         //then
         result.andExpect status().isOk()
         verify(s2).deleteFolder(fid)
@@ -178,7 +177,7 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
         given s2.getFid(path) willReturn fid
 
         //when
-        def result = mockMvc.perform(get("/keys/urn/${urlEncodedPath}"));
+        def result = mockMvc.perform(get("/keys/urn/{path}", path));
 
         //then
         result.andExpect status().isOk()

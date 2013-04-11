@@ -6,12 +6,14 @@ import java.net.URLDecoder;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.HandlerMapping;
 
 import by.hzv.s2.model.ContentStream;
 import by.hzv.s2.model.FileInfo;
@@ -33,6 +36,7 @@ import by.hzv.s2.service.S2;
  */
 @Controller
 public class RestAdapter {
+    private static final String SLASH = "/";
     @Autowired
     private S2 s2;
 
@@ -58,13 +62,11 @@ public class RestAdapter {
         }
     }
 
-    @RequestMapping(value = "/urn/{path:.*}",
-                    method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public @ResponseBody byte[] getContentStreamByPath(@PathVariable String path, HttpServletResponse response)
+    @RequestMapping(value = "/urn/**", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public @ResponseBody byte[] getContentStreamByPath(HttpServletRequest request, HttpServletResponse response)
         throws IOException {
 
-        ContentStream cs = s2.getContentStreamByPath(decodePath(path));
+        ContentStream cs = s2.getContentStreamByPath(getUrn(request));
         if (cs.isProxy()) {
             response.sendRedirect(cs.getUrl());
             return null;
@@ -85,9 +87,9 @@ public class RestAdapter {
         s2.deleteFile(fid);
     }
 
-    @RequestMapping(value = "/urn/{path:.+}", method = RequestMethod.DELETE)
-    public void deleteFileByPath(@PathVariable("path") String path) {
-        s2.deleteFileByPath(decodePath(path));
+    @RequestMapping(value = "/urn/**", method = RequestMethod.DELETE)
+    public void deleteFileByPath(HttpServletRequest request) {
+        s2.deleteFileByPath(getUrn(request));
     }
 
     @RequestMapping(value = "/folders/{fid}", method = RequestMethod.DELETE)
@@ -101,9 +103,9 @@ public class RestAdapter {
         return s2.getPath(fid);
     }
 
-    @RequestMapping(value = "/keys/urn/{path:.+}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
-    public @ResponseBody String getFid(@PathVariable("path") String path) {
-        return s2.getFid(decodePath(path));
+    @RequestMapping(value = "/keys/urn/**", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    public @ResponseBody String getFid(HttpServletRequest request) {
+        return s2.getFid(getUrn(request));
     }
 
     @RequestMapping(value = "/rpc/{opName}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -112,11 +114,11 @@ public class RestAdapter {
         return s2.rpc(opName, params);
     }
 
-    private String decodePath(String path) {
-        try {
-            return URLDecoder.decode(path, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Cannot decode path parameter: " + path);
-        }
+    private String getUrn(HttpServletRequest request) {
+        String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+        String bestMatchPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
+
+        String answer = new AntPathMatcher().extractPathWithinPattern(bestMatchPattern, path);
+        return answer.startsWith(SLASH) ? answer : SLASH + answer; //normalize path
     }
 }
