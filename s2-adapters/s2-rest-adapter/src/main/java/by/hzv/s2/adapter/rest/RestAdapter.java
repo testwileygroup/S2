@@ -1,8 +1,6 @@
 package by.hzv.s2.adapter.rest;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Collection;
 import java.util.Map;
 
@@ -49,7 +47,8 @@ public class RestAdapter {
     }
 
     @RequestMapping(value = "/{fid}", method = RequestMethod.GET, produces = "application/octet-stream")
-    public @ResponseBody byte[] getContentStream(
+    @ResponseBody
+    public byte[] getContentStream(
             @PathVariable("fid") String fid,
             HttpServletResponse response) throws IOException {
 
@@ -63,7 +62,8 @@ public class RestAdapter {
     }
 
     @RequestMapping(value = "/urn/**", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public @ResponseBody byte[] getContentStreamByPath(HttpServletRequest request, HttpServletResponse response)
+    @ResponseBody
+    public byte[] getContentStreamByPath(HttpServletRequest request, HttpServletResponse response)
         throws IOException {
 
         ContentStream cs = s2.getContentStreamByPath(getUrn(request));
@@ -83,7 +83,8 @@ public class RestAdapter {
     }
 
     @RequestMapping(value = "/{fid}", method = RequestMethod.DELETE)
-    public @ResponseBody void deleteFile(@PathVariable("fid") String fid) {
+    @ResponseBody
+    public void deleteFile(@PathVariable("fid") String fid) {
         s2.deleteFile(fid);
     }
 
@@ -104,7 +105,8 @@ public class RestAdapter {
     }
 
     @RequestMapping(value = "/keys/urn/**", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
-    public @ResponseBody String getFid(HttpServletRequest request) {
+    @ResponseBody
+    public String getFid(HttpServletRequest request) {
         return s2.getFid(getUrn(request));
     }
 
