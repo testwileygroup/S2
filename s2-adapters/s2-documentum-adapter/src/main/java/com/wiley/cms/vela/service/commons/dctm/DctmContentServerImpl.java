@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import by.hzv.s2.model.ContentStream;
 
@@ -16,10 +15,9 @@ import com.documentum.fc.common.DfException;
  * @author <a href="eantaev@wiley.com">Evgeny Antaev</a>
  * @since 3/4/11
  */
-@Service("dctmContentServer")
 public class DctmContentServerImpl implements DctmContentServer {
     @Autowired
-    private DctmDao dmdao;
+    private DctmRepository dmdao;
 
     @Override
     public String importDoc(String fullPath, String objectType, ContentStream contentStream) throws DfException {

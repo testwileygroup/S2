@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*
 import org.apache.commons.io.IOUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.ClassPathResource
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests
 import org.testng.annotations.AfterMethod
@@ -20,6 +21,8 @@ import com.documentum.fc.client.IDfFolder
 import com.documentum.fc.common.DfId
 
 
+
+@ActiveProfiles('s2-documentum-adapter')
 @ContextConfiguration("/config/spring/dctm-plugin-context.xml")
 class DctmContentServerImplTest extends AbstractTestNGSpringContextTests {
     @Autowired

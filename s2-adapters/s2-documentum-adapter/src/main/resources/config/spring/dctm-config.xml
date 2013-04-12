@@ -1,17 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:c="http://www.springframework.org/schema/c"
-    xmlns:util="http://www.springframework.org/schema/util"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd"
+       profile="s2-documentum-adapter">
+
+    <bean id="dctmContentServer" class="com.wiley.cms.vela.service.commons.dctm.DctmContentServerImpl" />
+    <bean id="dctmRepository" class="com.wiley.cms.vela.service.commons.dctm.DctmRepositoryImpl "/>
+    <bean id="dfcTemplate" class="com.wiley.cms.vela.service.commons.dctm.DfcTemplateImpl" />
+
+    <bean id="dfcProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+             <list>
+                 <value>classpath:dfc.properties</value>
+                 <value>classpath:dfc.properties.${profile}</value>
+             </list>
+         </property>
+         <property name="ignoreResourceNotFound" value="true" />
+    </bean>
+
+   <bean id="dctmProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                 <value>classpath:dctm.properties</value>
+                 <value>classpath:dctm.properties.${profile}</value>
+             </list>
+         </property>
+         <property name="ignoreResourceNotFound" value="true" />
+    </bean>
 
 
-    <util:properties id="dfcProperties" location="classpath:dfc.properties"/>
-    <util:properties id="dctmProperties" location="classpath:dctm.properties"/>
     <bean id="dfcSessionFactoryForAdmin" class="com.wiley.cms.vela.service.commons.dctm.SimpleDfcSessionFactory"
          c:dfcProperties-ref="dfcProperties"
          c:dctmProperties-ref="dctmProperties"
          init-method="init" />
+
 
 </beans>

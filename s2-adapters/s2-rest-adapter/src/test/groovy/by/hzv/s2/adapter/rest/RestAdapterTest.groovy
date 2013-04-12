@@ -37,7 +37,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 
 @ActiveProfiles("integration")
 @WebAppConfiguration
-@ContextConfiguration("file:../**/rest-plugin-context.xml")
+@ContextConfiguration(["/integration-tests-profile.xml", "/config/mvc/rest-plugin-context.xml"])
 public class RestAdapterTest extends AbstractTestNGSpringContextTests {
     private final String fid = "999"
     private final String path = "/any/path/to/file.ext"

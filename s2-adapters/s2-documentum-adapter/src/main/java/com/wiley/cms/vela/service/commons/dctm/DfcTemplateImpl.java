@@ -3,7 +3,6 @@ package com.wiley.cms.vela.service.commons.dctm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.documentum.fc.client.DfServiceException;
 import com.documentum.fc.client.IDfSession;
@@ -22,21 +21,11 @@ import fj.P2;
  * @author <a href="mailto:SDebalchuk@wiley.ru">Stanislav Debalchuk</a>
  *         $Date: 2010-09-20 18:02:02 +0400 (Mon, 20 Sep 2010) $
  */
-@Component("dfcTemplate")
 public class DfcTemplateImpl implements DfcTemplate {
     private static final Logger LOG = LoggerFactory.getLogger(DfcTemplateImpl.class);
 
     @Autowired
     private DfcSessionFactory dfcSessionFactory;
-
-    /**
-     * Setter for property 'dfcSessionFactory'.
-     *
-     * @param aDfcSessionFactory Value to set for property 'dfcSessionFactory'.
-     */
-    public void setDfcSessionFactory(DfcSessionFactory aDfcSessionFactory) {
-        dfcSessionFactory = aDfcSessionFactory;
-    }
 
     /**
      * {@inheritDoc}

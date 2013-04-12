@@ -1,0 +1,9 @@
+dependencies {
+    compile project(':s2-rest-client')
+}
+
+
+jar {
+    //dependsOn configurations.runtime
+    from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+}

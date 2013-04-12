@@ -1,0 +1,8 @@
+apply plugin: 'war'
+
+webAppDirName = 'webapp'
+
+dependencies {    
+	runtime project(':s2-adapters:s2-rest-adapter')
+	runtime project(':s2-adapters:s2-documentum-adapter')
+}
