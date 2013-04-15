@@ -27,6 +27,8 @@ import by.hzv.s2.model.FileInfo;
 import by.hzv.s2.model.SimpleContentStream;
 import by.hzv.s2.service.S2;
 
+import com.google.common.base.Optional;
+
 
 /**
  * @author <a href="mailto:dkotsubo@wiley.com">Dmitry Kotsubo</a>
@@ -46,34 +48,38 @@ public class RestAdapter {
         return s2.createFile(filePath, new SimpleContentStream(content.getInputStream()), properties);
     }
 
-    @RequestMapping(value = "/{fid}", method = RequestMethod.GET, produces = "application/octet-stream")
+    @RequestMapping(value = "/{fid}", method = RequestMethod.GET)
     @ResponseBody
     public byte[] getContentStream(
             @PathVariable("fid") String fid,
             HttpServletResponse response) throws IOException {
 
-        ContentStream cs = s2.getContentStream(fid);
-        if (cs.isProxy()) {
-            response.sendRedirect(cs.getUrl());
-            return null;
-        } else {
-            return IOUtils.toByteArray(cs.getStream());
-        }
+        Optional<ContentStream> ocs = s2.getContentStream(fid);
+        return prepareContentStream(response, ocs);
     }
 
-    @RequestMapping(value = "/urn/**", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @RequestMapping(value = "/urn/**", method = RequestMethod.GET)
     @ResponseBody
     public byte[] getContentStreamByPath(HttpServletRequest request, HttpServletResponse response)
         throws IOException {
 
-        ContentStream cs = s2.getContentStreamByPath(getUrn(request));
-        if (cs.isProxy()) {
-            response.sendRedirect(cs.getUrl());
-            return null;
-        } else {
-            return IOUtils.toByteArray(cs.getStream());
+        Optional<ContentStream> ocs = s2.getContentStreamByPath(getUrn(request));
+        return prepareContentStream(response, ocs);
+    }
+
+    private byte[] prepareContentStream(HttpServletResponse response, Optional<ContentStream> ocs) throws IOException {
+        byte[] res = null;
+
+        if (ocs.isPresent()) {
+            ContentStream cs = ocs.get();
+            if (cs.isProxy()) {
+                response.sendRedirect(cs.getUrl());
+            } else {
+                res = IOUtils.toByteArray(cs.getStream());
+            }
         }
 
+        return res;
     }
 
     @RequestMapping(value = "/metadata/folders/{fid}/files", method = RequestMethod.GET)

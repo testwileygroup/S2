@@ -1,5 +1,6 @@
 package by.hzv.s2.adapter.dctm;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -18,6 +19,7 @@ import by.hzv.s2.service.S2;
 import com.documentum.fc.client.IDfDocument;
 import com.documentum.fc.client.IDfFolder;
 import com.documentum.fc.common.DfException;
+import com.google.common.base.Optional;
 import com.wiley.cms.vela.service.commons.dctm.DctmContentServer;
 import com.wiley.cms.vela.service.commons.dctm.DctmRepositoryImpl;
 
@@ -76,13 +78,23 @@ public class DocumentumAdapter implements S2 {
     }
 
     @Override
-    public ContentStream getContentStream(String fid) {
-        return new SimpleContentStream(contentServer.getDocContent(fid));
+    public Optional<ContentStream> getContentStream(String fid) {
+        InputStream content = contentServer.getDocContent(fid);
+
+        return converToOptional(content);
     }
 
     @Override
-    public ContentStream getContentStreamByPath(String filePath) {
-        return new SimpleContentStream(contentServer.getDocContentByPath(filePath));
+    public Optional<ContentStream> getContentStreamByPath(String filePath) {
+        InputStream content = contentServer.getDocContentByPath(filePath);
+
+        return converToOptional(content);
+    }
+
+    private Optional<ContentStream> converToOptional(InputStream content) {
+        return content == null
+            ? Optional.<ContentStream>absent()
+            : Optional.<ContentStream>of(new SimpleContentStream(content));
     }
 
     @Override

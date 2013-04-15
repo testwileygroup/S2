@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.Validate;
 import org.springframework.core.io.ClassPathResource;
 
 import com.documentum.fc.client.DfClient;
@@ -33,7 +34,9 @@ public class SimpleDfcSessionFactory implements DfcSessionFactory {
     private Properties dctmProperties;
 
     public SimpleDfcSessionFactory(Properties dfcProperties, Properties dctmProperties) {
+        Validate.notEmpty(dfcProperties, "dfc.properties file should be present in classpath");
         this.dfcProperties = dfcProperties;
+        Validate.notEmpty(dctmProperties, "dctm.properties file should be present in classpath");
         this.dctmProperties = dctmProperties;
         this.docBaseName = dfcProperties.getProperty("dfc.globalregistry.repository");
         this.username = dctmProperties.getProperty("authentication.username");
@@ -80,8 +83,7 @@ public class SimpleDfcSessionFactory implements DfcSessionFactory {
                 sessionManager.beginTransaction();
             }
 
-            IDfSession newSession =
-                sessionManager.getSession(docBaseName);
+            IDfSession newSession = sessionManager.getSession(docBaseName);
             if (newSession == null) {
                 throw new DfcException("could not open DFC session");
             }

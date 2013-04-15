@@ -3,6 +3,8 @@ package by.hzv.s2.service;
 import java.util.Collection;
 import java.util.Map;
 
+import com.google.common.base.Optional;
+
 import by.hzv.s2.model.ContentStream;
 import by.hzv.s2.model.FileInfo;
 
@@ -54,9 +56,9 @@ public interface S2 {
      * Returns ContentStream for file associated with fid
      *
      * @param fid - File ID
-     * @return - ContentStream or null
+     * @return - Optional<ContentStream>
      */
-    ContentStream getContentStream(String fid);
+    Optional<ContentStream> getContentStream(String fid);
 
 
     /**
@@ -65,7 +67,7 @@ public interface S2 {
      * @param path - logical file path
      * @return - ContentStream or null
      */
-    ContentStream getContentStreamByPath(String filePath);
+    Optional<ContentStream> getContentStreamByPath(String filePath);
 
     /**
      * Returns FID for logical folder or file path

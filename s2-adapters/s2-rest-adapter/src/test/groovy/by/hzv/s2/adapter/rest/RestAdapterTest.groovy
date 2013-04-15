@@ -20,6 +20,7 @@ import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.web.context.WebApplicationContext
 import org.testng.annotations.BeforeClass
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test
 
 import by.hzv.s2.model.ContentStream
@@ -30,15 +31,17 @@ import by.hzv.s2.service.S2
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.google.common.base.Optional;
+
+
 /**
  * @author <a href="mailto:mityan@wiley.com">Mikhail Tyan</a>
  * @since 01.04.13
  */
-
 @ActiveProfiles("integration")
 @WebAppConfiguration
 @ContextConfiguration(["/integration-tests-profile.xml", "/config/mvc/rest-plugin-context.xml"])
-public class RestAdapterTest extends AbstractTestNGSpringContextTests {
+class RestAdapterTest extends AbstractTestNGSpringContextTests {
     private final String fid = "999"
     private final String path = "/any/path/to/file.ext"
     private final String url = "http://any.url.to.file"
@@ -57,11 +60,22 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
         mockMvc = webAppContextSetup(waq).build();
     }
 
+    //FIXME: 1. add more extension variations to data provider
+    //       2. rewrite all tests with paths to use pathDataProvider
+    @DataProvider
+    Object[][] pathDataProvider() {
+        return [
+            [path],
+            ['/anyfolder/anyfile.xml']
+        ]
+    }
+
+
     @Test
-    public void shouldRedirectWhenContentStreamProxyReturnedByFid() throws Exception {
+    void shouldRedirectWhenContentStreamProxyReturnedByFid() throws Exception {
         //given
         ContentStream proxy = new SimpleContentStream(url)
-        given s2.getContentStream(fid) willReturn proxy
+        given s2.getContentStream(fid) willReturn Optional.of(proxy)
 
         //when
         def result = mockMvc.perform(get("/{fid}", fid))
@@ -75,10 +89,11 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void shouldReturnContentByFid() throws Exception {
+    void shouldReturnContentByFid() throws Exception {
         //given
         byte[] expectedContent = [1, 2, 3]
-        given s2.getContentStream(fid) willReturn new SimpleContentStream(new ByteArrayInputStream(expectedContent))
+        given s2.getContentStream(fid) willReturn(
+            Optional.of(new SimpleContentStream(new ByteArrayInputStream(expectedContent))))
 
         //when
         def result = mockMvc.perform(get("/{fid}", fid))
@@ -89,14 +104,15 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
         assertThat responseAsByteArray isEqualTo expectedContent
     }
 
-    @Test
-    public void shouldReturnContentByPath() throws Exception {
+    @Test(dataProvider = 'pathDataProvider')
+    void shouldReturnContentByPath(String anyPath) throws Exception {
         //given
         byte[] expectedContent = [1, 2, 3]
-        given s2.getContentStreamByPath(path) willReturn new SimpleContentStream(new ByteArrayInputStream(expectedContent))
+        given s2.getContentStreamByPath(anyPath) willReturn(
+            Optional.of(new SimpleContentStream(new ByteArrayInputStream(expectedContent))))
 
         //when
-        def result = mockMvc.perform(get("/urn/{path}", path))
+        def result = mockMvc.perform(get("/urn/{path}", anyPath))
 
         //then
         result.andExpect(status().isOk())
@@ -109,7 +125,7 @@ public class RestAdapterTest extends AbstractTestNGSpringContextTests {
     public void shouldRedirectWhenContentStreamProxyReturnedByPath() throws Exception {
         //given
         ContentStream proxy = new SimpleContentStream(url)
-        given s2.getContentStreamByPath(path) willReturn proxy
+        given s2.getContentStreamByPath(path) willReturn Optional.of(proxy)
 
         //when
         def result = mockMvc.perform(get("/urn/{path}", path))

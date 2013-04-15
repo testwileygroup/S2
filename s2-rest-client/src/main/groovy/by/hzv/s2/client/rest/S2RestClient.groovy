@@ -18,6 +18,8 @@ import by.hzv.s2.model.SimpleContentStream
 import by.hzv.s2.model.SimpleFileInfo
 import by.hzv.s2.service.S2
 
+import com.google.common.base.Optional
+
 /**
  * @author <a href="mailto:dkotsubo@wiley.com">Dmitry Kotsubo</a>
  * @since 01.04.2013
@@ -77,18 +79,19 @@ class S2RestClient implements S2 {
     }
 
     @Override
-    ContentStream getContentStream(String fid) {
+    Optional<ContentStream> getContentStream(String fid) {
         Resource response = restTemplate.getForObject(s2url + "/{fid}", Resource, fid)
+        InputStream is = response.getInputStream()
 
         try {
-            return new SimpleContentStream(response.getInputStream())
+            return is == null ? Optional.absent() : Optional.of(new SimpleContentStream())
         } catch (IOException e) {
             throw new RuntimeException()
         }
     }
 
     @Override
-    ContentStream getContentStreamByPath(String filePath) {
+    Optional<ContentStream> getContentStreamByPath(String filePath) {
         Resource response = restTemplate.getForObject(s2url + "/urn/{path}", Resource, filePath)
 
         try {
