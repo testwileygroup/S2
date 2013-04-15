@@ -39,7 +39,9 @@ public class DocumentumAdapter implements S2 {
     @Override
     public String createFile(String filePath, ContentStream content, Map<String, ?> properties) {
         try {
-            return contentServer.importDoc(filePath, (String) properties.get(DOCUMENT_TYPE), content);
+            String doctype = properties == null ? null : (String) properties.get(DOCUMENT_TYPE);
+
+            return contentServer.importDoc(filePath, doctype, content);
         } catch (DfException e) {
             LOG.error(e.getMessage(), e);
             return null;
@@ -49,7 +51,6 @@ public class DocumentumAdapter implements S2 {
     @Override
     public void deleteFile(String fid) {
         contentServer.deleteDoc(fid);
-
     }
 
     @Override

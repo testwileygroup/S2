@@ -42,9 +42,10 @@ public class RestAdapter {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseBody
-    public String createFile(@RequestParam("filePath") String filePath,
+    public String createFile(@RequestPart(value = "properties", required = false) Map<String, ?> properties,
                              @RequestPart("content") MultipartFile content,
-                             @RequestPart("properties") Map<String, ?> properties) throws IOException {
+                             @RequestParam("filePath") String filePath) throws IOException {
+
         return s2.createFile(filePath, new SimpleContentStream(content.getInputStream()), properties);
     }
 

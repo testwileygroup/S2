@@ -46,7 +46,9 @@ public class DctmRepositoryImpl implements DctmRepository {
 
     private static final String SLASH = "/";
     private static final String TYPE_NAME_DM_FOLDER = "dm_folder";
+    private static final String TYPE_NAME_DM_DOCUMENT = "dm_document";
     private static final String DEFAULT_CONTENT_TYPE = "binary";
+
 
     private static final String DQL_FOLDER_CONTENT_DELETE_TMPL =
             "delete dm_document %s objects where folder('%s', DESCEND)";
@@ -65,7 +67,7 @@ public class DctmRepositoryImpl implements DctmRepository {
                 String dql = String.format("select r_object_id, r_aspect_name, i_is_reference, i_is_replica, i_vstamp"
                         + " from dm_document where FOLDER('%s', DESCEND)", folderPath);
 
-                IDfEnumeration en = session.getObjectsByQuery(dql, "dm_document");
+                IDfEnumeration en = session.getObjectsByQuery(dql, TYPE_NAME_DM_DOCUMENT);
 
                 sw.stop();
                 sw.start("process result");
@@ -209,19 +211,6 @@ public class DctmRepositoryImpl implements DctmRepository {
         });
     }
 
-    @Override
-    public String getContentType(IDfSession s, String name) throws DfException {
-        String contentType = FormatHelper.getInstance(s).getFormatForExtension(FilenameUtils.getExtension(name));
-        if (Strings.isNullOrEmpty(contentType)) {
-            contentType = DEFAULT_CONTENT_TYPE;
-        }
-
-        return contentType;
-    }
-
-
-
-
 
     @Override
     public void deleteFolder(final String folderId) {
@@ -328,9 +317,9 @@ public class DctmRepositoryImpl implements DctmRepository {
             /* create document */
             stopWatch.start("create DCTM object");
             String name = FilenameUtils.getName(fullpath);
-            doc = (IDfSysObject) session.newObject(objectType);
+            doc = (IDfSysObject) session.newObject(resolveObjectType(objectType));
             doc.setObjectName(name);
-            doc.setContentType(getContentType(session, name));
+            doc.setContentType(resolveContentType(session, name));
             stopWatch.stop();
             stopWatch.start("link DCTM object");
             doc.link(folderPath);
@@ -349,5 +338,18 @@ public class DctmRepositoryImpl implements DctmRepository {
 
         LOG.trace(stopWatch.prettyPrint());
         return docId;
+    }
+
+    private String resolveContentType(IDfSession s, String name) throws DfException {
+        String contentType = FormatHelper.getInstance(s).getFormatForExtension(FilenameUtils.getExtension(name));
+        if (Strings.isNullOrEmpty(contentType)) {
+            contentType = DEFAULT_CONTENT_TYPE;
+        }
+
+        return contentType;
+    }
+
+    private String resolveObjectType(String objectType) throws DfException {
+        return objectType == null ? TYPE_NAME_DM_DOCUMENT : objectType;
     }
 }

@@ -41,6 +41,5 @@ public interface DctmRepository {
     void deleteDoc(String objId);
     Void deleteFolderContent(String path);
     void deleteFolder(String folderId);
-    String getContentType(IDfSession s, String name) throws DfException;
 }
 
