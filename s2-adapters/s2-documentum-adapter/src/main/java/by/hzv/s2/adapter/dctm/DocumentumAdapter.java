@@ -17,11 +17,10 @@ import by.hzv.s2.model.SimpleContentStream;
 import by.hzv.s2.service.S2;
 
 import com.documentum.fc.client.IDfDocument;
-import com.documentum.fc.client.IDfFolder;
 import com.documentum.fc.common.DfException;
 import com.google.common.base.Optional;
-import com.wiley.cms.vela.service.commons.dctm.DctmContentServer;
-import com.wiley.cms.vela.service.commons.dctm.DctmRepositoryImpl;
+import com.wiley.dctm.DctmContentServer;
+import com.wiley.dctm.DctmRepositoryImpl;
 
 /**
  * @author <a href="mailto:dkotsubo@wiley.com">Dmitry Kotsubo</a>
@@ -55,7 +54,7 @@ public class DocumentumAdapter implements S2 {
 
     @Override
     public void deleteFileByPath(String filePath) {
-        throw new UnsupportedOperationException();
+        contentServer.deleteDocByPath(filePath);
     }
 
     @Override
@@ -63,19 +62,14 @@ public class DocumentumAdapter implements S2 {
         contentServer.deleteFolder(fid);
     }
 
+    @SuppressWarnings("unused")
     @Override
     public Collection<FileInfo> listFiles(String fid) {
         Collection<FileInfo> result = new ArrayList<>();
-        try {
-            IDfFolder folder = contentServer.getFolder(fid);
-            Collection<IDfDocument> docs = contentServer.getDocsUnderPath(folder.getPath(0));
-            //FIXME implement mapping logic
-            return result;
-        } catch (DfException e) {
-            //FIXME implement proper error handling
-            LOG.error(e.getMessage(), e);
-            return null;
-        }
+        String folderPath = contentServer.getPath(fid);
+        Collection<IDfDocument> docs = contentServer.getDocsUnderPath(folderPath);
+        //FIXME implement mapping logic
+        return result;
     }
 
     @Override
@@ -100,12 +94,12 @@ public class DocumentumAdapter implements S2 {
 
     @Override
     public String getFid(String path) {
-        throw new UnsupportedOperationException();
+        return contentServer.getFid(path);
     }
 
     @Override
     public String getPath(String fid) {
-        throw new UnsupportedOperationException();
+        return contentServer.getPath(fid);
     }
 
     @Override

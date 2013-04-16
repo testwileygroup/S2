@@ -1,4 +1,4 @@
-package com.wiley.cms.vela.service.commons.dctm;
+package com.wiley.dctm;
 
 /**
  * @author <a href="mailto:SDebalchuk@wiley.ru">Stanislav Debalchuk</a>

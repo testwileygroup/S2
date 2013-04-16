@@ -1,4 +1,12 @@
-package com.wiley.cms.vela.service.commons.dctm;
+package com.wiley.dctm;
+
+import java.io.InputStream;
+import java.util.Collection;
+
+import by.hzv.s2.model.ContentStream;
+
+import com.documentum.fc.client.IDfFolder;
+import com.documentum.fc.client.IDfPersistentObject;
 
 
 /**
@@ -22,4 +30,30 @@ public interface DfcTemplate {
     <T> T executeInSession(DfcCallback<T> dfcCallback);
 
     <T> T executeInSession(DfcCallback<T> dfcCallback, boolean requiresNew);
+
+    void execQuery(String dql);
+
+    <T extends IDfPersistentObject> Collection<T> getObjectsByQuery(String dql, String objectType);
+
+    <T extends IDfPersistentObject> T getObject(String objectId);
+
+    <T extends IDfPersistentObject> T getObjectByPath(String path);
+
+    InputStream getDocContent(String docId);
+
+    InputStream getDocContentByPath(String docPath);
+
+    String getFid(String path);
+
+    String getPath(String fid);
+
+    void deleteDoc(String objId);
+
+    void deleteDocByPath(String path);
+
+    void deleteFolder(String folderId);
+
+    IDfFolder forceCreateFolder(String typeName, String path);
+
+    String importDoc(String fullpath, String objectType, ContentStream contentStream);
 }

@@ -27,6 +27,7 @@ import by.hzv.s2.model.FileInfo;
 import by.hzv.s2.model.SimpleContentStream;
 import by.hzv.s2.service.S2;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Optional;
 
 
@@ -68,21 +69,6 @@ public class RestAdapter {
         return prepareContentStream(response, ocs);
     }
 
-    private byte[] prepareContentStream(HttpServletResponse response, Optional<ContentStream> ocs) throws IOException {
-        byte[] res = null;
-
-        if (ocs.isPresent()) {
-            ContentStream cs = ocs.get();
-            if (cs.isProxy()) {
-                response.sendRedirect(cs.getUrl());
-            } else {
-                res = IOUtils.toByteArray(cs.getStream());
-            }
-        }
-
-        return res;
-    }
-
     @RequestMapping(value = "/metadata/folders/{fid}/files", method = RequestMethod.GET)
     @ResponseBody
     public Collection<FileInfo> listFiles(@PathVariable("fid") String fid) {
@@ -96,25 +82,27 @@ public class RestAdapter {
     }
 
     @RequestMapping(value = "/urn/**", method = RequestMethod.DELETE)
+    @ResponseBody
     public void deleteFileByPath(HttpServletRequest request) {
         s2.deleteFileByPath(getUrn(request));
     }
 
     @RequestMapping(value = "/folders/{fid}", method = RequestMethod.DELETE)
+    @ResponseBody
     public void deleteFolder(@PathVariable("fid") String fid) {
         s2.deleteFolder(fid);
     }
 
-    @RequestMapping(value = "/keys/{fid}", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    @RequestMapping(value = "/keys/{fid}", method = RequestMethod.GET)
     @ResponseBody
-    public String getPath(@PathVariable("fid") String fid) {
-        return s2.getPath(fid);
+    public byte[] getPath(@PathVariable("fid") String fid) {
+        return s2.getPath(fid).getBytes(Charsets.UTF_8);
     }
 
-    @RequestMapping(value = "/keys/urn/**", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    @RequestMapping(value = "/keys/urn/**", method = RequestMethod.GET)
     @ResponseBody
-    public String getFid(HttpServletRequest request) {
-        return s2.getFid(getUrn(request));
+    public byte[] getFid(HttpServletRequest request) {
+        return s2.getFid(getUrn(request)).getBytes(Charsets.UTF_8);
     }
 
     @RequestMapping(value = "/rpc/{opName}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -129,5 +117,20 @@ public class RestAdapter {
 
         String answer = new AntPathMatcher().extractPathWithinPattern(bestMatchPattern, path);
         return answer.startsWith(SLASH) ? answer : SLASH + answer; //normalize path
+    }
+
+    private byte[] prepareContentStream(HttpServletResponse response, Optional<ContentStream> ocs) throws IOException {
+        byte[] res = null;
+
+        if (ocs.isPresent()) {
+            ContentStream cs = ocs.get();
+            if (cs.isProxy()) {
+                response.sendRedirect(cs.getUrl());
+            } else {
+                res = IOUtils.toByteArray(cs.getStream());
+            }
+        }
+
+        return res;
     }
 }

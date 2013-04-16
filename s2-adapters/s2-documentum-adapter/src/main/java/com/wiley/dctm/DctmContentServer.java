@@ -1,4 +1,4 @@
-package com.wiley.cms.vela.service.commons.dctm;
+package com.wiley.dctm;
 
 import java.io.InputStream;
 import java.util.Collection;
@@ -17,13 +17,16 @@ public interface DctmContentServer {
     String importDoc(String fullPath, String type, ContentStream contentStream) throws DfException;
     InputStream getDocContent(String docId);
     InputStream getDocContentByPath(String docPath);
-    void deleteDoc(final String objId);
+    void deleteDoc(String objId);
+    void deleteDocByPath(String path);
 
     IDfDocument getDocById(String docId);
     IDfDocument getDocByPath(String docPath);
     Collection<IDfDocument> getDocsUnderPath(String folderPath);
 
     void deleteFolder(String folderId);
-//    IDfFolder getFolderByPath(String path) throws DfException;
     IDfFolder getFolder(String folderId) throws DfException;
+
+    String getFid(String path);
+    String getPath(String fid);
 }

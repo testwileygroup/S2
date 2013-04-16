@@ -19,6 +19,8 @@ import com.documentum.fc.client.DfIdNotFoundException
 import com.documentum.fc.client.IDfDocument
 import com.documentum.fc.client.IDfFolder
 import com.documentum.fc.common.DfId
+import com.wiley.dctm.DctmContentServer;
+import com.wiley.dctm.DfcSessionFactory;
 
 
 
@@ -107,8 +109,29 @@ class DctmContentServerImplTest extends AbstractTestNGSpringContextTests {
         def result = sut.getDocContentByPath("/Temp/${testDoc.filename}")
         // Then
         def content = IOUtils.toByteArray(result)
-        assertThat content isNotNull()
-        assertThat content isEqualTo testDoc.file.getBytes()
+        assertThat content isNotNull() /*and*/ isEqualTo testDoc.file.getBytes()
+    }
+
+    @Test(dependsOnMethods = ['shouldImportDocument'])
+    public void shouldReturnFidForFilePath() {
+        //given
+        def doc = sessionFactory.currentSession.getObjectByPath("/Temp/${testDoc.filename}")
+        def docId = doc.objectId.id
+        //when
+        def result = sut.getFid("/Temp/${testDoc.filename}")
+        //then
+        assertThat result isNotNull() /*and*/ isEqualTo docId
+    }
+
+    @Test(dependsOnMethods = ['shouldImportDocument'])
+    public void shouldReturFilePathForFid() {
+        //given
+        String path = "/Temp/${testDoc.filename}"
+        def docId = sessionFactory.currentSession.getObjectByPath(path).objectId.id
+        //when
+        def result = sut.getPath(docId)
+        //then
+        assertThat result isNotNull() /*and*/ isEqualTo path
     }
 
     @Test(dependsOnMethods = ['shouldImportDocument'])
@@ -119,6 +142,8 @@ class DctmContentServerImplTest extends AbstractTestNGSpringContextTests {
         assertThat result.size() isGreaterThan 1
         println "Nuber of retrieve documents: ${result.size()}"
     }
+
+
 
 
     @Test(dependsOnMethods = ['shouldImportDocument'], priority = Integer.MAX_VALUE,

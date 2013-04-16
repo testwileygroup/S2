@@ -1,4 +1,4 @@
-package com.wiley.cms.vela.service.commons.dctm;
+package com.wiley.dctm;
 
 
 import java.io.Serializable;
