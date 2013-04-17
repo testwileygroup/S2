@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
 
 import org.mockito.ArgumentCaptor
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -20,6 +21,7 @@ import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.web.context.WebApplicationContext
 import org.testng.annotations.BeforeClass
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test
 
@@ -60,13 +62,30 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         mockMvc = webAppContextSetup(waq).build();
     }
 
-    //FIXME: 1. add more extension variations to data provider
-    //       2. rewrite all tests with paths to use pathDataProvider
+    @BeforeMethod
+    void resetMocks() {
+        Mockito.reset(s2)
+    }
+
     @DataProvider
     Object[][] pathDataProvider() {
         return [
-            [path],
-            ['/anyfolder/anyfile.xml']
+                ['/anyfolder/anyfile.xml'],
+                ['/anyfolder/anotherfolder/anyfile.gif'],
+                ['/anyfile.pdf'],
+                ['/anyfile.png'],
+                ['/anyfile.pdf']
+        ]
+    }
+
+    @DataProvider
+    Object[][] getFileInfos() {
+        FileInfo fileInfo = new SimpleFileInfo("anyid", "anyfilename", "any.ext", new BigInteger(1))
+        FileInfo anotherFileInfo = new SimpleFileInfo("anotherjid", "anotherfilename", "another.ext", new BigInteger(1))
+        return [
+                [[]],
+                [[fileInfo]],
+                [[fileInfo, anotherFileInfo]]
         ]
     }
 
@@ -109,7 +128,7 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         //given
         byte[] expectedContent = [1, 2, 3]
         given s2.getContentStreamByPath(anyPath) willReturn(
-            Optional.of(new SimpleContentStream(new ByteArrayInputStream(expectedContent))))
+                Optional.of(new SimpleContentStream(new ByteArrayInputStream(expectedContent))))
 
         //when
         def result = mockMvc.perform(get("/urn/{path}", anyPath))
@@ -121,14 +140,15 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         assertThat response.contentAsByteArray isEqualTo expectedContent
     }
 
-    @Test
-    public void shouldRedirectWhenContentStreamProxyReturnedByPath() throws Exception {
+
+    @Test(dataProvider = 'pathDataProvider')
+    public void shouldRedirectWhenContentStreamProxyReturnedByPath(String anyPath) throws Exception {
         //given
         ContentStream proxy = new SimpleContentStream(url)
-        given s2.getContentStreamByPath(path) willReturn Optional.of(proxy)
+        given s2.getContentStreamByPath(anyPath) willReturn Optional.of(proxy)
 
         //when
-        def result = mockMvc.perform(get("/urn/{path}", path))
+        def result = mockMvc.perform(get("/urn/{path}", anyPath))
 
         //then
         result.andExpect status().isMovedTemporarily() // should redirect to URL with content
@@ -139,11 +159,10 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
     }
 
 
-    @Test //TODO enhance test to use DataProvider with collection of 0, 1, several FileInfo
-    public void shouldReturnListOfFilesMetadata() throws Exception {
+    @Test(dataProvider = "getFileInfos")
+    public void shouldReturnListOfFilesMetadata(List<FileInfo> fileInfos) throws Exception {
         //given
-        FileInfo fileInfo = new SimpleFileInfo("anyid", "anyfilename", "any.ext", new BigInteger(1))
-        given s2.listFiles(fid) willReturn([fileInfo])
+        given s2.listFiles(fid) willReturn(fileInfos)
 
         //when
         def result = mockMvc.perform(get("/metadata/folders/{fid}/files/", fid))
@@ -152,8 +171,12 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         result.andExpect status().isOk()
 
         def json = result.andReturn().getResponse().contentAsString
-        Collection<FileInfo> fileInfos = new ObjectMapper().readValue(json, SimpleFileInfo[])
-        assertThat fileInfos[0] isEqualTo fileInfo
+        Collection<FileInfo> resultFileInfos = new ObjectMapper().readValue(json, SimpleFileInfo[])
+        if (fileInfos.size == 0) {
+            assertThat resultFileInfos isEmpty()
+        } else {
+            assertThat resultFileInfos containsOnly(fileInfos as FileInfo[])
+        }
     }
 
     @Test
@@ -166,14 +189,14 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         verify(s2).deleteFile(fid)
     }
 
-    @Test
-    public void shouldDeleteFileByPath() throws Exception {
+    @Test(dataProvider = 'pathDataProvider')
+    public void shouldDeleteFileByPath(String anyPath) throws Exception {
         //when
-        def result = mockMvc.perform(delete("/urn/{path}", path))
+        def result = mockMvc.perform(delete("/urn/{path}", anyPath))
 
         //then
         result.andExpect status().isOk()
-        verify(s2).deleteFileByPath(path)
+        verify(s2).deleteFileByPath(anyPath)
 
     }
 
@@ -187,13 +210,13 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
 
     }
 
-    @Test
-    public void shouldReturnFidForPath() throws Exception {
+    @Test(dataProvider = 'pathDataProvider')
+    public void shouldReturnFidForPath(String anyPath) throws Exception {
         //given
-        given s2.getFid(path) willReturn fid
+        given s2.getFid(anyPath) willReturn fid
 
         //when
-        def result = mockMvc.perform(get("/keys/urn/{path}", path));
+        def result = mockMvc.perform(get("/keys/urn/{path}", anyPath));
 
         //then
         result.andExpect status().isOk()
@@ -202,7 +225,6 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         assertThat retrievedFid isEqualTo fid
     }
 
-    @Test
     public void shouldReturnPathForFid() throws Exception {
         //given
         given s2.getPath(fid) willReturn path
@@ -214,7 +236,7 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         result.andExpect status().isOk()
 
         def retrievedPath = result.andReturn().response.contentAsString
-        assertThat retrievedPath isEqualTo path
+        assertThat retrievedPath isEqualTo anyPath
     }
 
     @Test
