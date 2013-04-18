@@ -1,15 +1,13 @@
 package by.hzv.s2.adapter.rest
 
-import static org.fest.assertions.Assertions.assertThat
-import static org.mockito.BDDMockito.given
-import static org.mockito.Matchers.*
-import static org.mockito.Mockito.verify
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
-
+import by.hzv.s2.model.ContentStream
+import by.hzv.s2.model.FileInfo
+import by.hzv.s2.model.SimpleContentStream
+import by.hzv.s2.model.SimpleFileInfo
+import by.hzv.s2.service.S2
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.google.common.base.Optional
 import org.mockito.ArgumentCaptor
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -21,20 +19,18 @@ import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.web.context.WebApplicationContext
 import org.testng.annotations.BeforeClass
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
+import org.testng.annotations.BeforeMethod
+import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
 
-import by.hzv.s2.model.ContentStream
-import by.hzv.s2.model.FileInfo
-import by.hzv.s2.model.SimpleContentStream
-import by.hzv.s2.model.SimpleFileInfo
-import by.hzv.s2.service.S2
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.google.common.base.Optional;
-
+import static org.fest.assertions.Assertions.assertThat
+import static org.mockito.BDDMockito.given
+import static org.mockito.Matchers.*
+import static org.mockito.Mockito.reset
+import static org.mockito.Mockito.verify
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
 
 /**
  * @author <a href="mailto:mityan@wiley.com">Mikhail Tyan</a>
@@ -45,7 +41,6 @@ import com.google.common.base.Optional;
 @ContextConfiguration(["/integration-tests-profile.xml", "/config/mvc/rest-plugin-context.xml"])
 class RestAdapterTest extends AbstractTestNGSpringContextTests {
     private final String fid = "999"
-    private final String path = "/any/path/to/file.ext"
     private final String url = "http://any.url.to.file"
 
     @Autowired
@@ -63,8 +58,8 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
     }
 
     @BeforeMethod
-    void resetMocks() {
-        Mockito.reset(s2)
+    void resetS2() {
+        reset(s2)
     }
 
     @DataProvider
@@ -89,7 +84,6 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         ]
     }
 
-
     @Test
     void shouldRedirectWhenContentStreamProxyReturnedByFid() throws Exception {
         //given
@@ -112,7 +106,7 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         //given
         byte[] expectedContent = [1, 2, 3]
         given s2.getContentStream(fid) willReturn(
-            Optional.of(new SimpleContentStream(new ByteArrayInputStream(expectedContent))))
+                Optional.of(new SimpleContentStream(new ByteArrayInputStream(expectedContent))))
 
         //when
         def result = mockMvc.perform(get("/{fid}", fid))
@@ -139,7 +133,6 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         def response = result.andReturn().response
         assertThat response.contentAsByteArray isEqualTo expectedContent
     }
-
 
     @Test(dataProvider = 'pathDataProvider')
     public void shouldRedirectWhenContentStreamProxyReturnedByPath(String anyPath) throws Exception {
@@ -172,11 +165,7 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
 
         def json = result.andReturn().getResponse().contentAsString
         Collection<FileInfo> resultFileInfos = new ObjectMapper().readValue(json, SimpleFileInfo[])
-        if (fileInfos.size == 0) {
-            assertThat resultFileInfos isEmpty()
-        } else {
-            assertThat resultFileInfos containsOnly(fileInfos as FileInfo[])
-        }
+        assertThat resultFileInfos isEqualTo fileInfos
     }
 
     @Test
@@ -225,9 +214,10 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         assertThat retrievedFid isEqualTo fid
     }
 
-    public void shouldReturnPathForFid() throws Exception {
+    @Test(dataProvider = 'pathDataProvider')
+    public void shouldReturnPathForFid(String anyPath) throws Exception {
         //given
-        given s2.getPath(fid) willReturn path
+        given s2.getPath(fid) willReturn anyPath
 
         //when
         def result = mockMvc.perform(get("/keys/${fid}"))
@@ -243,9 +233,9 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
     public void shouldCreateFile() throws Exception {
         //given
         def fileUpload = fileUpload("/")
-            .file('content', 'test_content'.bytes)
-            .file(new MockMultipartFile('properties', '', MediaType.APPLICATION_JSON_VALUE, '{}'.bytes))
-            .param('filePath', '/any/path')
+                .file('content', 'test_content'.bytes)
+                .file(new MockMultipartFile('properties', '', MediaType.APPLICATION_JSON_VALUE, '{}'.bytes))
+                .param('filePath', '/any/path')
 
         //when
         def result = mockMvc.perform(fileUpload)
@@ -260,9 +250,13 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         String key = "key"
         String value = "value"
         String operationName = "operation"
+        long id = 1L
+        String name = "rpcObject"
+        boolean condition = true
 
-        String rpcObj = new Object() //TODO provide more complex object for test. Probably some custom Class
-        given s2.rpc(anyString(),anyMap()) willReturn rpcObj;
+        Object rpcObj = new TestObject(id: 1, name: name, condition: condition)
+
+        given s2.rpc(anyString(), anyMap()) willReturn rpcObj;
 
         //when
         def result = mockMvc.perform(post("/rpc/${operationName}")
@@ -274,7 +268,7 @@ class RestAdapterTest extends AbstractTestNGSpringContextTests {
         verifyRpcArguments(operationName, key, value)
 
         def json = result.andReturn().getResponse().contentAsString
-        Object answer = new ObjectMapper().readValue(json, Object)
+        Object answer = new ObjectMapper().readValue(json, TestObject.class)
         assertThat answer isEqualTo rpcObj
     }
 

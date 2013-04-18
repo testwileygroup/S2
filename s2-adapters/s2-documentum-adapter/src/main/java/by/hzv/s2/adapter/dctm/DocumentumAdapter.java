@@ -1,7 +1,8 @@
 package by.hzv.s2.adapter.dctm;
 
+import static com.google.common.collect.Collections2.transform;
+
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import com.documentum.fc.common.DfException;
 import com.google.common.base.Optional;
 import com.wiley.dctm.DctmContentServer;
 import com.wiley.dctm.DctmRepositoryImpl;
+
 
 /**
  * @author <a href="mailto:dkotsubo@wiley.com">Dmitry Kotsubo</a>
@@ -62,14 +64,13 @@ public class DocumentumAdapter implements S2 {
         contentServer.deleteFolder(fid);
     }
 
-    @SuppressWarnings("unused")
     @Override
     public Collection<FileInfo> listFiles(String fid) {
-        Collection<FileInfo> result = new ArrayList<>();
         String folderPath = contentServer.getPath(fid);
         Collection<IDfDocument> docs = contentServer.getDocsUnderPath(folderPath);
-        //FIXME implement mapping logic
-        return result;
+        Collection<FileInfo> fileInfos = transform(docs, new IdfToFileInfoMapper());
+
+        return fileInfos;
     }
 
     @Override
